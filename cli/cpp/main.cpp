@@ -42,6 +42,44 @@ public:
     }
 };
 
+typedef struct {
+    int year;
+    int mon;
+    int mday;
+    int wday;
+    int hour;
+    int min;
+    int sec;
+} Time;
+
+int is_leap(int year) {
+    return year % 400 == 0 || (!year % 100 == 0 && year % 4 == 0);
+}
+
+int get_day_in_mon(int year, int month) {
+    switch (month)
+    {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+        return 31;
+    
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        return 30;
+    case 2:
+        return (is_leap(year)) ? 29 : 28;
+    default:
+        return -1;
+    }
+}
+
 class Clock
 {
 protected:
@@ -50,20 +88,15 @@ protected:
     City *_now_city;
 
 public:
-    int _year;
-    int _mon;
-    int _mday;
-    int _wday;
-    int _hour;
-    int _min;
-    int _sec;
+    Time _utc_time;
+    Time _city_time;
 
     Clock(map<string, City *> city_list, string city_list_key)
     {
         _city_list = city_list;
         _now_city = _city_list[city_list_key];
 
-        record_now();
+        record_utc_now();
     }
 
     bool set_city(string key)
@@ -80,21 +113,74 @@ public:
 
 
     // TODO 時差も加味する
-    void record_now()
+    void record_utc_now()
     {
         time_t tt;
-        struct tm *ts;
 
         time(&tt);
-        ts = localtime(&tt);
+        // 世界標準時で取得
+        auto ts = gmtime(&tt);
 
-        _year = ts->tm_year + 1900;
-        _mon = ts->tm_mon + 1;
-        _mday = ts->tm_mday;
-        _hour = ts->tm_hour;
-        _min = ts->tm_min;
-        _sec = ts->tm_sec;
-        _wday = ts->tm_wday;
+        _utc_time.year = ts->tm_year + 1900;
+        _utc_time.mon = ts->tm_mon + 1;
+        _utc_time.mday = ts->tm_mday;
+        _utc_time.wday = ts->tm_wday;
+        _utc_time.hour = ts->tm_hour;
+        _utc_time.min = ts->tm_min;
+        _utc_time.sec = ts->tm_sec;
+    }
+
+    void record_city_now() {
+        record_utc_now();
+
+        // 未テスト
+        auto HOUR_IN_DAY = 24;
+        auto DAY_IN_WEEK = 7;
+        auto MON_IN_YEAR = 12;
+
+        _city_time = _utc_time;
+
+        _city_time.hour += _now_city->_time_diff;
+        if (_city_time.hour < 0) {
+            _city_time.wday--;
+            if (_city_time.wday < 0) {
+                _city_time.wday += DAY_IN_WEEK;
+            }
+
+            _city_time.mday--;
+            if (_city_time.mday <= 0) {
+                _city_time.mon--;
+                if (_city_time.mon <= 0) {
+                    _city_time.year--;
+
+                    _city_time.mon += MON_IN_YEAR;
+                }
+
+                _city_time.mday += get_day_in_mon(_city_time.year, _city_time.mon);
+            }
+
+            _city_time.hour += HOUR_IN_DAY;
+        }
+        else if (_city_time.hour >= HOUR_IN_DAY) {
+            _city_time.wday++;
+            if (_city_time.wday >= DAY_IN_WEEK) {
+                _city_time.wday -= DAY_IN_WEEK;
+            }
+
+            _city_time.mday++;
+            if (_city_time.mday > get_day_in_mon(_city_time.year, _city_time.mon)) {
+
+                _city_time.mon++;
+                if (_city_time.mon > MON_IN_YEAR) {
+                    _city_time.year++;
+
+                    _city_time.mon -= MON_IN_YEAR;
+                }
+                _city_time.mday -= get_day_in_mon(_city_time.year, _city_time.mon);
+            }
+
+            _city_time.hour -= HOUR_IN_DAY;
+        }
     }
 
     map<string, string> get_by_str_map()
@@ -103,13 +189,13 @@ public:
 
         str_map["country"] = _now_city->_country->_name;
         str_map["city"] = _now_city->_name;
-        str_map["year"] = fill_by_zero(_year, 4);
-        str_map["mon"] = fill_by_zero(_mon, 2);
-        str_map["mday"] = fill_by_zero(_mday, 2);
-        str_map["wday"] = _wday_str_list[_wday];
-        str_map["hour"] = fill_by_zero(_hour, 2);
-        str_map["min"] = fill_by_zero(_min, 2);
-        str_map["sec"] = fill_by_zero(_sec, 2);
+        str_map["year"] = fill_by_zero(_city_time.year, 4);
+        str_map["mon"] = fill_by_zero(_city_time.mon, 2);
+        str_map["mday"] = fill_by_zero(_city_time.mday, 2);
+        str_map["wday"] = _wday_str_list[_city_time.wday];
+        str_map["hour"] = fill_by_zero(_city_time.hour, 2);
+        str_map["min"] = fill_by_zero(_city_time.min, 2);
+        str_map["sec"] = fill_by_zero(_city_time.sec, 2);
 
         return str_map;
     }
@@ -118,13 +204,13 @@ public:
     {
         map<string, int> int_map;
 
-        int_map["year"] = _year;
-        int_map["mon"] = _mon;
-        int_map["mday"] = _mday;
-        int_map["wday"] = _wday;
-        int_map["hour"] = _hour;
-        int_map["min"] = _min;
-        int_map["sec"] = _sec;
+        int_map["year"] = _city_time.year;
+        int_map["mon"] = _city_time.mon;
+        int_map["mday"] = _city_time.mday;
+        int_map["wday"] = _city_time.wday;
+        int_map["hour"] = _city_time.hour;
+        int_map["min"] = _city_time.min;
+        int_map["sec"] = _city_time.sec;
 
         return int_map;
     }
@@ -133,13 +219,12 @@ public:
 
 void display_clock(map<string, string> clock_str_map)
 {
-    string clock_str = clock_str_map["country"] + ", " + clock_str_map["city"] + " | " + clock_str_map["year"] + "/" + clock_str_map["mon"] + "/" + clock_str_map["mday"] + "(" + clock_str_map["wday"] + ")" + clock_str_map["hour"] + ":" + clock_str_map["min"] + ":" + clock_str_map["sec"];
+    auto clock_str = clock_str_map["country"] + ", " + clock_str_map["city"] + " | " + clock_str_map["year"] + "/" + clock_str_map["mon"] + "/" + clock_str_map["mday"] + "(" + clock_str_map["wday"] + ")" + clock_str_map["hour"] + ":" + clock_str_map["min"] + ":" + clock_str_map["sec"];
     cout << clock_str << endl;
 }
 
 int main(int argc, char *argv[])
 {
-
     map<string, Country *> country_list;
     country_list["usa"] = new Country("USA");
     country_list["ingland"] = new Country("Ingland");
@@ -153,12 +238,12 @@ int main(int argc, char *argv[])
 
     Clock *clock = new Clock(city_list, "new-york");
 
-    clock->record_now();
+    clock->record_city_now();
     display_clock(clock->get_by_str_map());
 
     if (clock->set_city("tokyo"))
     {
-        clock->record_now();
+        clock->record_city_now();
         display_clock(clock->get_by_str_map());
     }
 
