@@ -3,16 +3,19 @@
 #include <time.h>
 #include <string.h>
 
+// 真偽値の型
+typedef int bool;
 #define true 1
 #define false 0
-typedef int bool;
 
+// 国クラス
 typedef struct
 {
     bool is_exists;
     char name[64];
 } Country;
 
+// 空のインスタンスを返すコンストラクタ
 Country Country__not_found()
 {
     Country instance;
@@ -20,6 +23,7 @@ Country Country__not_found()
     return instance;
 }
 
+// 通常のコンストラクタ
 Country Country__new(const char name[64])
 {
     Country instance = Country__not_found();
@@ -30,6 +34,7 @@ Country Country__new(const char name[64])
     return instance;
 }
 
+// 連想配列<国>クラス
 typedef struct
 {
     bool is_exists;
@@ -38,6 +43,7 @@ typedef struct
     int len;
 } Map_Country;
 
+// 空のインスタンスを返すコンストラクタ
 Map_Country Map_Country__not_found()
 {
     Map_Country instance;
@@ -45,6 +51,7 @@ Map_Country Map_Country__not_found()
     return instance;
 }
 
+// 通常のコンストラクタ
 Map_Country Map_Country__new()
 {
     Map_Country instance = Map_Country__not_found();
@@ -55,6 +62,7 @@ Map_Country Map_Country__new()
     return instance;
 }
 
+// 連想配列に国クラスのインスタンスを追加する
 bool Map_Country__add(Map_Country *instance, const char key[16], Country value)
 {
     if (instance->len >= 64)
@@ -69,6 +77,7 @@ bool Map_Country__add(Map_Country *instance, const char key[16], Country value)
     return false;
 }
 
+// 連想配列から国クラスのインスタンスを取得する
 Country Map_Country__find(Map_Country *instance, const char key[16])
 {
     for (int i = 0; i < instance->len; i++)
@@ -82,6 +91,7 @@ Country Map_Country__find(Map_Country *instance, const char key[16])
     return Country__not_found();
 }
 
+// 都市クラス
 typedef struct
 {
     bool is_exists;
@@ -90,6 +100,7 @@ typedef struct
     int time_diff;
 } City;
 
+// 空のインスタンスを返すコンストラクタ
 City City__not_found()
 {
     City instance;
@@ -97,6 +108,7 @@ City City__not_found()
     return instance;
 }
 
+// 通常のコンストラクタ
 City City__new(const char name[64], Country country, int time_diff)
 {
     City instance = City__not_found();
@@ -109,6 +121,7 @@ City City__new(const char name[64], Country country, int time_diff)
     return instance;
 }
 
+// 連想配列<都市>クラス
 typedef struct
 {
     bool is_exists;
@@ -117,6 +130,7 @@ typedef struct
     int len;
 } Map_City;
 
+// 空のインスタンスを返すコンストラクタ
 Map_City Map_City__not_found()
 {
     Map_City instance;
@@ -124,6 +138,7 @@ Map_City Map_City__not_found()
     return instance;
 }
 
+// 通常のコンストラクタ
 Map_City Map_City__new()
 {
     Map_City instance = Map_City__not_found();
@@ -134,6 +149,7 @@ Map_City Map_City__new()
     return instance;
 }
 
+// 連想配列に都市クラスのインスタンスを追加する
 int Map_City__add(Map_City *instance, const char key[16], City value)
 {
     if (instance->len >= 64)
@@ -148,6 +164,7 @@ int Map_City__add(Map_City *instance, const char key[16], City value)
     return false;
 }
 
+// 連想配列から都市クラスのインスタンスを取得する
 City Map_City__find(Map_City *instance, const char key[16])
 {
     for (int i = 0; i < instance->len; i++)
@@ -161,6 +178,7 @@ City Map_City__find(Map_City *instance, const char key[16])
     return City__not_found();
 }
 
+// 時刻管理クラス（数値バージョン）
 typedef struct
 {
     bool is_exists;
@@ -173,6 +191,7 @@ typedef struct
     int sec;
 } Time;
 
+// 空のインスタンスを返すコンストラクタ
 Time Time__not_found()
 {
     Time instance;
@@ -180,6 +199,7 @@ Time Time__not_found()
     return instance;
 }
 
+// 通常のコンストラクタ
 Time Time__new(int year, int mon, int mday, int wday, int hour, int min, int sec)
 {
     Time instance = Time__not_found();
@@ -196,17 +216,20 @@ Time Time__new(int year, int mon, int mday, int wday, int hour, int min, int sec
     return instance;
 }
 
-void Time__get_wday(Time instance, char wday_str[64])
+// 曜日を文字列(英語)で取得する
+void Time__get_wday_by_str(Time instance, char wday_by_str[64])
 {
-    char wday_str_list[7][20] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-    strcpy(wday_str, wday_str_list[instance.wday]);
+    char wday_by_str_list[7][20] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    strcpy(wday_by_str, wday_by_str_list[instance.wday]);
 }
 
+// 閏年かどうか判定する
 int Time__is_leap(Time instance)
 {
     return instance.year % 400 == 0 || (!instance.year % 100 == 0 && instance.year % 4 == 0);
 }
 
+// 任意の月の日数を取得する
 int Time__get_day_in_mon(Time instance)
 {
     switch (instance.mon)
@@ -234,6 +257,7 @@ int Time__get_day_in_mon(Time instance)
     }
 }
 
+// 時刻管理クラス（文字バージョン）
 typedef struct
 {
     bool is_exists;
@@ -244,23 +268,25 @@ typedef struct
     char hour[16];
     char min[16];
     char sec[16];
-} TimeStr;
+} Str_Time;
 
-TimeStr TimeStr__not_found()
+// 空のインスタンスを返すコンストラクタ
+Str_Time Str_Time__not_found()
 {
-    TimeStr instance;
+    Str_Time instance;
     instance.is_exists = false;
     return instance;
 }
 
-TimeStr TimeStr__new(Time time)
+// 通常のコンストラクタ
+Str_Time Str_Time__new(Time time)
 {
-    TimeStr instance = TimeStr__not_found();
+    Str_Time instance = Str_Time__not_found();
 
     sprintf(instance.year, "%04d", time.year);
     sprintf(instance.mon, "%02d", time.mon);
     sprintf(instance.mday, "%02d", time.mday);
-    Time__get_wday(time, instance.wday);
+    Time__get_wday_by_str(time, instance.wday);
     sprintf(instance.hour, "%02d", time.hour);
     sprintf(instance.min, "%02d", time.min);
     sprintf(instance.sec, "%02d", time.sec);
@@ -269,6 +295,7 @@ TimeStr TimeStr__new(Time time)
     return instance;
 }
 
+// 時計クラス
 typedef struct
 {
     bool is_exists;
@@ -278,6 +305,7 @@ typedef struct
     Time city_time;
 } Clock;
 
+// 空のインスタンスを返すコンストラクタ
 Clock Clock__not_found()
 {
     Clock instance;
@@ -285,6 +313,7 @@ Clock Clock__not_found()
     return instance;
 }
 
+// 時刻を取得する都市を変更する
 bool Clock__set_city(Clock *instance, const char city_list_key[16])
 {
     City now_city_tmp;
@@ -297,6 +326,7 @@ bool Clock__set_city(Clock *instance, const char city_list_key[16])
     return true;
 }
 
+// 通常のコンストラクタ
 Clock Clock__new(Map_City city_list, const char city_list_key[16])
 {
     Clock instance = Clock__not_found();
@@ -309,13 +339,13 @@ Clock Clock__new(Map_City city_list, const char city_list_key[16])
     return instance;
 }
 
+// 現在時刻を記録する（取得したい都市に合わせて時差を計算）
 void Clock__record_now(Clock *instance)
 {
-    // 世界標準時の取得
+    // --- 世界標準時で取得するゾーン ---
     time_t tt;
 
     time(&tt);
-    // 世界標準時で取得
     struct tm *ts = gmtime(&tt);
 
     instance->utc_time.year = ts->tm_year + 1900;
@@ -326,15 +356,18 @@ void Clock__record_now(Clock *instance)
     instance->utc_time.min = ts->tm_min;
     instance->utc_time.sec = ts->tm_sec;
 
-    // 時差の計算
-    int HOUR_IN_DAY = 24;
-    int DAY_IN_WEEK = 7;
-    int MON_IN_YEAR = 12;
+    // --- 時差を計算するゾーン ---
+    int HOUR_IN_DAY = 24; // 1日の時間
+    int DAY_IN_WEEK = 7;  // 1週間の日数
+    int MON_IN_YEAR = 12; // 1ヶ月の日数
 
+    // とりあえず世界標準時の時間をディープコピー
     instance->city_time = instance->utc_time;
 
+    // 時間だけに時差を反映
     instance->city_time.hour += instance->now_city.time_diff;
-    instance->utc_time.hour, instance->city_time.hour, instance->now_city.time_diff;
+
+    // 時間を変更したことによって、日にち,曜日,月,年が変わる場合は修正
     if (instance->city_time.hour < 0)
     {
         instance->city_time.wday--;
@@ -385,11 +418,11 @@ void Clock__record_now(Clock *instance)
     }
 }
 
-void display_clock(TimeStr time_str)
+void display_clock(Str_Time time_str)
 {
     printf("%s/%s/%s(%s) %s:%s:%s\n",
-        time_str.year, time_str.mon, time_str.mday, time_str.wday,
-        time_str.hour, time_str.min, time_str.sec);
+           time_str.year, time_str.mon, time_str.mday, time_str.wday,
+           time_str.hour, time_str.min, time_str.sec);
 }
 
 int main(int argc, char const *argv[])
@@ -412,12 +445,12 @@ int main(int argc, char const *argv[])
         return -1;
 
     Clock__record_now(&clock);
-    display_clock(TimeStr__new(clock.city_time));
+    display_clock(Str_Time__new(clock.city_time));
 
     if (!Clock__set_city(&clock, "tokyo"))
         return -1;
     Clock__record_now(&clock);
-    display_clock(TimeStr__new(clock.city_time));
+    display_clock(Str_Time__new(clock.city_time));
 
     return 0;
 }
