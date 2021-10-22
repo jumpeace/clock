@@ -49,6 +49,36 @@ protected:
     map<string, City *> _city_list;
     City *_now_city;
 
+public:
+    int _year;
+    int _mon;
+    int _mday;
+    int _wday;
+    int _hour;
+    int _min;
+    int _sec;
+
+    Clock(map<string, City *> city_list, string city_list_key)
+    {
+        _city_list = city_list;
+        _now_city = _city_list[city_list_key];
+
+        record_now();
+    }
+
+    bool set_city(string key)
+    {
+        if (_city_list.count(key) == 0)
+        {
+            return false;
+        };
+
+        _now_city = _city_list[key];
+
+        return true;
+    }
+
+
     // TODO 時差も加味する
     void record_now()
     {
@@ -84,41 +114,22 @@ protected:
         return str_map;
     }
 
-public:
-    int _year;
-    int _mon;
-    int _mday;
-    int _wday;
-    int _hour;
-    int _min;
-    int _sec;
-
-    Clock(map<string, City *> city_list, string city_list_key)
+    map<string, int> get_by_int_map()
     {
-        _city_list = city_list;
-        _now_city = _city_list[city_list_key];
+        map<string, int> int_map;
 
-        record_now();
-    }
+        int_map["year"] = _year;
+        int_map["mon"] = _mon;
+        int_map["mday"] = _mday;
+        int_map["wday"] = _wday;
+        int_map["hour"] = _hour;
+        int_map["min"] = _min;
+        int_map["sec"] = _sec;
 
-    bool set_city(string key)
-    {
-        if (_city_list.count(key) == 0)
-        {
-            return false;
-        };
-
-        _now_city = _city_list[key];
-
-        return true;
-    }
-
-    map<string, string> get_now()
-    {
-        record_now();
-        return get_by_str_map();
+        return int_map;
     }
 };
+
 
 void display_clock(map<string, string> clock_str_map)
 {
@@ -142,11 +153,13 @@ int main(int argc, char *argv[])
 
     Clock *clock = new Clock(city_list, "new-york");
 
-    display_clock(clock->get_now());
+    clock->record_now();
+    display_clock(clock->get_by_str_map());
 
     if (clock->set_city("tokyo"))
     {
-        display_clock(clock->get_now());
+        clock->record_now();
+        display_clock(clock->get_by_str_map());
     }
 
     return 0;
