@@ -1,12 +1,6 @@
-
-// 都市クラス
-typedef struct
-{
-    bool is_exists;
-    char name[64];
-    Country country;
-    int time_diff;
-} City;
+#include "bool.h"
+#include "country.h"
+#include "city.h"
 
 // 空のインスタンスを返すコンストラクタ
 City City__not_found()
@@ -28,15 +22,6 @@ City City__new(const char name[64], Country country, int time_diff)
     instance.is_exists = true;
     return instance;
 }
-
-// 連想配列<都市>クラス
-typedef struct
-{
-    bool is_exists;
-    char k[32][16];
-    City v[32];
-    int len;
-} Map_City;
 
 // 空のインスタンスを返すコンストラクタ
 Map_City Map_City__not_found()
@@ -73,13 +58,13 @@ int Map_City__add(Map_City *instance, const char key[16], City value)
 }
 
 // 連想配列から都市クラスのインスタンスを取得する
-City Map_City__find(Map_City *instance, const char key[16])
+City Map_City__find(Map_City instance, const char key[16])
 {
-    for (int i = 0; i < instance->len; i++)
+    for (int i = 0; i < instance.len; i++)
     {
-        if (strcmp(instance->k[i], key) == 0)
+        if (strcmp(instance.k[i], key) == 0)
         {
-            return instance->v[i];
+            return instance.v[i];
         }
     }
 

@@ -1,13 +1,10 @@
+#include "bool.h"
+#include "city.h"
+#include "country.h"
+#include "time.h"
+#include "clock.h"
+#include <time.h>
 
-// 時計クラス
-typedef struct
-{
-    bool is_exists;
-    Map_City city_list;
-    City now_city;
-    Time utc_time;
-    Time city_time;
-} Clock;
 
 // 空のインスタンスを返すコンストラクタ
 Clock Clock__not_found()
@@ -15,19 +12,6 @@ Clock Clock__not_found()
     Clock instance;
     instance.is_exists = false;
     return instance;
-}
-
-// 時刻を取得する都市を変更する
-bool Clock__set_city(Clock *instance, const char city_list_key[16])
-{
-    City now_city_tmp;
-    now_city_tmp = Map_City__find(&instance->city_list, city_list_key);
-    if (!now_city_tmp.is_exists)
-        return false;
-
-    instance->now_city = now_city_tmp;
-
-    return true;
 }
 
 // 通常のコンストラクタ
@@ -42,6 +26,20 @@ Clock Clock__new(Map_City city_list, const char city_list_key[16])
     instance.is_exists = true;
     return instance;
 }
+
+// 時刻を取得する都市を変更する
+bool Clock__set_city(Clock *instance, const char city_list_key[16])
+{
+    City now_city_tmp;
+    now_city_tmp = Map_City__find(instance->city_list, city_list_key);
+    if (!now_city_tmp.is_exists)
+        return false;
+
+    instance->now_city = now_city_tmp;
+
+    return true;
+}
+
 
 // 現在時刻を記録する（取得したい都市に合わせて時差を計算）
 void Clock__record_now(Clock *instance)

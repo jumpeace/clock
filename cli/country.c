@@ -1,9 +1,5 @@
-// 国クラス
-typedef struct
-{
-    bool is_exists;
-    char name[64];
-} Country;
+#include "bool.h"
+#include "country.h"
 
 // 空のインスタンスを返すコンストラクタ
 Country Country__not_found()
@@ -24,14 +20,6 @@ Country Country__new(const char name[64])
     return instance;
 }
 
-// 連想配列<国>クラス
-typedef struct
-{
-    bool is_exists;
-    char k[32][16];
-    Country v[32];
-    int len;
-} Map_Country;
 
 // 空のインスタンスを返すコンストラクタ
 Map_Country Map_Country__not_found()
@@ -68,13 +56,13 @@ bool Map_Country__add(Map_Country *instance, const char key[16], Country value)
 }
 
 // 連想配列から国クラスのインスタンスを取得する
-Country Map_Country__find(Map_Country *instance, const char key[16])
+Country Map_Country__find(Map_Country instance, const char key[16])
 {
-    for (int i = 0; i < instance->len; i++)
+    for (int i = 0; i < instance.len; i++)
     {
-        if (strcmp(instance->k[i], key) == 0)
+        if (strcmp(instance.k[i], key) == 0)
         {
-            return instance->v[i];
+            return instance.v[i];
         }
     }
 

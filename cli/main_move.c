@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include "country.h"
+#include "city.h"
+#include "time.h"
+#include "clock.h"
+
 void display_clock(Str_Time time_str)
 {
     printf("%s/%s/%s(%s) %s:%s:%s\n",
@@ -15,10 +21,10 @@ int main(int argc, char const *argv[])
     Map_Country__add(&country_list, "japan", Country__new("Japan"));
 
     Map_City city_list = Map_City__new();
-    Map_City__add(&city_list, "tokyo", City__new("Tokyo", Map_Country__find(&country_list, "japan"), 9));
-    Map_City__add(&city_list, "london", City__new("London", Map_Country__find(&country_list, "ingland"), 0));
-    Map_City__add(&city_list, "new-york", City__new("New York", Map_Country__find(&country_list, "usa"), -5));
-    Map_City__add(&city_list, "san-francisco", City__new("San Francisco", Map_Country__find(&country_list, "usa"), -8));
+    Map_City__add(&city_list, "tokyo", City__new("Tokyo", Map_Country__find(country_list, "japan"), 9));
+    Map_City__add(&city_list, "london", City__new("London", Map_Country__find(country_list, "ingland"), 0));
+    Map_City__add(&city_list, "new-york", City__new("New York", Map_Country__find(country_list, "usa"), -5));
+    Map_City__add(&city_list, "san-francisco", City__new("San Francisco", Map_Country__find(country_list, "usa"), -8));
 
     Clock clock = Clock__new(city_list, "new-york");
     if (!clock.is_exists)

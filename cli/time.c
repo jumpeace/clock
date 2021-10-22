@@ -1,16 +1,5 @@
-
-// 時刻管理クラス（数値バージョン）
-typedef struct
-{
-    bool is_exists;
-    int year;
-    int mon;
-    int mday;
-    int wday;
-    int hour;
-    int min;
-    int sec;
-} Time;
+#include "bool.h"
+#include "time.h"
 
 // 空のインスタンスを返すコンストラクタ
 Time Time__not_found()
@@ -77,19 +66,6 @@ int Time__get_day_in_mon(Time instance)
         return -1;
     }
 }
-
-// 時刻管理クラス（文字バージョン）
-typedef struct
-{
-    bool is_exists;
-    char year[16];
-    char mon[16];
-    char mday[16];
-    char wday[64];
-    char hour[16];
-    char min[16];
-    char sec[16];
-} Str_Time;
 
 // 空のインスタンスを返すコンストラクタ
 Str_Time Str_Time__not_found()
