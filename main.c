@@ -14,7 +14,6 @@ void display_clock(Str_Time time_str)
 int main(int argc, char const *argv[])
 {
     Map_Country country_list = Map_Country__new();
-    Country country;
 
     Map_Country__add(&country_list, "usa", Country__new("USA"));
     Map_Country__add(&country_list, "ingland", Country__new("Ingland"));

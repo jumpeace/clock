@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "bool.h"
 #include "time.h"
 
