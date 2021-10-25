@@ -3,16 +3,16 @@
 #
 
 #	最終目的のファイル
-TARGET = result.exe
+TARGET = dist/result.exe
 
 #	ソースファイル(*.c)の一覧
-SRCS = country.cpp city.cpp time.cpp clock.cpp main.cpp
+SRCS = src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp src/cli/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
 OBJS = $(SRCS:.c=.o)
 
 #	ヘッダファイルの一覧
-HEADERS = country.h city.h time.h clock.h
+HEADERS = src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h
 
 #	コンパイラ・リンカの指定
 CC = g++
