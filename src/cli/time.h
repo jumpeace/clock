@@ -27,6 +27,7 @@ public:
     int is_leap();
     // 任意の月の日数を取得する
     int get_day_in_mon();
+    map<string, int> get_by_int_map();
     map<string, string> get_by_str_map();
 };
 

@@ -59,6 +59,21 @@ int Time::get_day_in_mon()
     }
 }
 
+map<string, int> Time::get_by_int_map()
+{
+    map<string, int> str_map;
+
+    str_map["year"] = year;
+    str_map["mon"] = mon;
+    str_map["mday"] = mday;
+    str_map["wday"] = wday;
+    str_map["hour"] = hour;
+    str_map["min"] = min;
+    str_map["sec"] = sec;
+
+    return str_map;
+}
+
 map<string, string> Time::get_by_str_map()
 {
     map<string, string> str_map;

@@ -25,6 +25,7 @@ public:
     void record_now();
 
     map<string, string> get_city_time_by_str_map();
+    map<string, string> get_city_time_by_int_map();
 };
 
 #endif
