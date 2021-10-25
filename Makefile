@@ -6,7 +6,7 @@
 TARGET = dist/result.exe
 
 #	ソースファイル(*.c)の一覧
-SRCS = src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp src/cli/main.cpp
+SRCS = src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp src/gli/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
 OBJS = $(SRCS:.c=.o)
@@ -19,7 +19,7 @@ CC = g++
 CCFLAGS = -Wall -I/usr/include/opengl
 LD = g++
 LDFLAGS =
-LIBS = 
+LIBS = -lglpng -lglut -lGLU -lGL
 
 #	OBJSからTARGETを作る方法
 $(TARGET) : $(OBJS)
