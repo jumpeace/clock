@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     global::draw = new Draw(global::clock);
 
-    window_init(&argc, argv, new Xy(600, 480), display, 100);
+    window::init(&argc, argv, new Xy(600, 480), display, 100);
 
 
     return 0;

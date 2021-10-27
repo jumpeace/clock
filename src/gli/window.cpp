@@ -2,6 +2,13 @@
 #include "window.h"
 #include "tool.h"
 
+int wait_ms;
+
+void timer(int value) {
+    glutPostRedisplay();
+    glutTimerFunc(wait_ms, timer, 0);
+}
+
 // 画面サイズが変わっても、座標が混乱しないようにする
 void reshape(int w, int h)
 {
@@ -13,14 +20,7 @@ void reshape(int w, int h)
     glTranslated(0, -h, 0);
 }
 
-int wait_ms;
-
-void timer(int value) {
-    glutPostRedisplay();
-    glutTimerFunc(wait_ms, timer, 0);
-}
-
-void window_init(int *argc, char *argv[], Xy* size, void(* display) (void), int _wait_ms) {
+void window::init(int *argc, char *argv[], Xy* size, void(* display) (void), int _wait_ms) {
     // glutの初期化
     glutInit(argc, argv);
 

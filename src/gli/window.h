@@ -3,7 +3,8 @@
 
 #include "../base/dim.h"
 
-void reshape();
-void window_init(int*, char **, Xy*, void(*) (void), int);
+namespace window {
+    void init(int*, char **, Xy*, void(*) (void), int);
+}
 
 #endif
