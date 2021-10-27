@@ -9,7 +9,7 @@ TARGET = dist/result.exe
 SRCS = \
 	src/base/dim.cpp src/base/color.cpp \
 	src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp \
-	src/gli/gl.cpp \
+	src/gli/tool.cpp src/gli/window.cpp \
 	src/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
@@ -19,7 +19,7 @@ OBJS = $(SRCS:.cpp=.o)
 HEADERS = \
 	src/base/dim.h src/base/color.h \
 	src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h \
-	src/gli/gl.h
+	src/gli/tool.h src/gli/window.h
 
 #	コンパイラ・リンカの指定
 CC = g++

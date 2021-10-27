@@ -10,43 +10,16 @@ using namespace std;
 #include "cli/city.h"
 #include "cli/time.h"
 #include "cli/clock.h"
-#include "gli/gl.h"
+#include "gli/tool.h"
+#include "gli/window.h"
 
-void reshapeDisplay(int, int);
 void display();
 
 int main(int argc, char *argv[])
 {
-    // glutの初期化
-    glutInit(&argc, argv);
-
-    // ウィンドウの初期化
-    glutInitDisplayMode(GLUT_RGBA);
-    glutInitWindowSize(600, 480);
-
-    // ウィンドウ作成
-    glutCreateWindow("sample1");
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshapeDisplay);
-
-    // 初期描画
-    display();
-
-    // ウィンドウの描画
-    glutMainLoop();
+    window_init(&argc, argv, new Xy(600, 480), display);
 
     return 0;
-}
-
-// 画面サイズが変わっても、座標が混乱しないようにする
-void reshapeDisplay(int w, int h)
-{
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluOrtho2D(0, w, 0, h);
-    glScaled(1, -1, 1);
-    glTranslated(0, -h, 0);
 }
 
 // 針を描画
