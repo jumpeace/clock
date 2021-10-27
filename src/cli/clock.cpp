@@ -99,10 +99,6 @@ void Clock::record_now()
     }
 }
 
-map<string, int> Clock::get_city_time_by_int_map() {
-    return city_time->get_by_int_map();
-}
-
 map<string, string> Clock::get_city_time_by_str_map() {
     return city_time->get_by_str_map();
 }

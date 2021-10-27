@@ -26,7 +26,7 @@ string Time::get_wday_by_str()
 
 
 // 閏年かどうか判定する
-int Time::is_leap()
+bool Time::is_leap()
 {
     return year % 400 == 0 || (!year % 100 == 0 && year % 4 == 0);
 }
@@ -59,19 +59,8 @@ int Time::get_day_in_mon()
     }
 }
 
-map<string, int> Time::get_by_int_map()
-{
-    map<string, int> str_map;
-
-    str_map["year"] = year;
-    str_map["mon"] = mon;
-    str_map["mday"] = mday;
-    str_map["wday"] = wday;
-    str_map["hour"] = hour;
-    str_map["min"] = min;
-    str_map["sec"] = sec;
-
-    return str_map;
+bool Time::is_morning() {
+    return hour / 12 == 0;
 }
 
 map<string, string> Time::get_by_str_map()

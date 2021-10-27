@@ -14,17 +14,16 @@ class Clock
 protected:
     map<string, City *> cities;
     City *now_city;
-    Time *utc_time;
-    Time *city_time;
 
 public:
+    Time *utc_time;
+    Time *city_time;
     Clock(map<string, City*>, string);
 
     bool set_city(string);
 
     void record_now();
 
-    map<string, int> get_city_time_by_int_map();
     map<string, string> get_city_time_by_str_map();
 };
 
