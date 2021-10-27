@@ -23,28 +23,44 @@ int main(int argc, char *argv[])
 }
 
 // 針を描画
-void draw_clock_needle(double len, double angle, float lineWidth, Rgb* color)
+void draw_clock_needle(float len, float angle, float lineWidth, Rgb *color)
 {
     // BUG 線の太さが変わらない
-    auto window_w = glutGet(GLUT_WINDOW_WIDTH);
-    auto window_h = glutGet(GLUT_WINDOW_HEIGHT);
-    auto window_half_x = window_w / 2;
-    auto window_half_y = window_h / 2;
+    auto center_pos = Gl::centerPos();
 
     glBegin(GL_LINES);
     Gl::color(color);
     glLineWidth(lineWidth);
-    glVertex2i(window_half_x, window_half_y);
+    glVertex2i(center_pos->x, center_pos->y);
     glVertex2i(
-        window_half_x + (int)(len * sin(angle)),
-        window_half_y - (int)(len * cos(angle)));
+        center_pos->x + (int)(len * sin(angle)),
+        center_pos->y - (int)(len * cos(angle)));
     glEnd();
 }
 
-// n1進法からn2進法に変換
-double n_ary_convertor(double src, double n1, double n2)
+// n_1進法からn_2進法に変換
+float n_ary_convertor(float src, float n1, float n2)
 {
     return src * (n2 / n1);
+}
+
+void draw_circle(Xy* center_pos, float round, Rgb* filling_color) {
+    int edge_num = 360;
+    float angle;
+
+    glBegin(GL_POLYGON);
+    Gl::color(filling_color);
+    
+    for (auto i = 0; i < edge_num; i++)
+    {
+        angle = n_ary_convertor(i, edge_num, M_PI * 2);
+        glVertex2i(
+            center_pos->x + (int)(round * sin(angle)),
+            center_pos->y - (int)(round * cos(angle))
+        );
+    }
+
+    glEnd();
 }
 
 // ウィンドウの表示内容を更新する関数
@@ -78,22 +94,22 @@ void display(void)
 
     if (is_morning)
         Gl::clear_color(new Rgba(0, 255, 255, 255));
-        // glClearColor(0.0, 1.0, 1.0, 1.0);
     else
         Gl::clear_color(new Rgba(255, 0, 255, 255));
-        // glClearColor(1.0, 0.0, 1.0, 1.0);
 
-    Rgb* color = (is_morning) ? new Rgb(0, 0, 0) : new Rgb(255, 255, 255);
+    draw_circle(Gl::centerPos(), 155, new Rgb(255, 255, 255));
+    draw_circle(Gl::centerPos(), 150, new Rgb(0, 0, 0));
+
     // 針を描画
     draw_clock_needle(90,
-                      n_ary_convertor(clock->city_time->hour % 12, 12, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 12), 
-                      20.0, color);
+                      n_ary_convertor(clock->city_time->hour % 12, 12, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 12),
+                      20.0, new Rgb(255, 255, 255));
     draw_clock_needle(110,
                       n_ary_convertor(clock->city_time->min, 60, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 60),
-                      4.0, color);
+                      4.0, new Rgb(255, 255, 255));
     draw_clock_needle(120,
                       n_ary_convertor(clock->city_time->sec, 60, M_PI * 2),
-                      2.0, color);
+                      2.0, new Rgb(255, 255, 255));
 
     glFlush();
 }

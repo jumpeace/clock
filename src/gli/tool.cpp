@@ -1,5 +1,20 @@
 #include "tool.h"
 
+Xy* Gl::windowSize() {
+    return new Xy(
+        glutGet(GLUT_WINDOW_WIDTH),
+        glutGet(GLUT_WINDOW_HEIGHT)
+    );
+}
+
+Xy* Gl::centerPos() {
+    auto window_size = Gl::windowSize();
+    return new Xy(
+        window_size->x / 2.0,
+        window_size->y / 2.0
+    );
+}
+
 void Gl::color(Rgb* rgb)
 {
     glColor3ub(rgb->r, rgb->g, rgb->b);

@@ -1,5 +1,5 @@
-#ifndef _GL_H_
-#define _GL_H_
+#ifndef _TOOL_H_
+#define _TOOL_H_
 
 #include <GL/glut.h>
 #include "../base/color.h"
@@ -7,6 +7,8 @@
 
 class Gl {
 public:
+    static Xy* windowSize();
+    static Xy* centerPos();
     static void color(Rgb*);
     static void clear_color(Rgba*);
 };

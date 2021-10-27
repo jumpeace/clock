@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include "window.h"
+#include "tool.h"
 
 // 画面サイズが変わっても、座標が混乱しないようにする
 void reshape(int w, int h)

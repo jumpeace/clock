@@ -1,6 +1,6 @@
 #include "dim.h"
 
-Xy::Xy(int _x, int _y)
+Xy::Xy(float _x, float _y)
 {
     x = _x;
     y = _y;

@@ -4,9 +4,10 @@
 class Xy
 {
 public:
-    int x;
-    int y;
-    Xy(int, int);
+    float x;
+    float y;
+    Xy(float, float);
 };
+
 
 #endif
