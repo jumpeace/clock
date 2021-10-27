@@ -1,12 +1,12 @@
 #ifndef _DIM_H_
 #define _DIM_H_
 
-class Dim
+class Xy
 {
 public:
     int x;
     int y;
-    Dim(int, int);
+    Xy(int, int);
 };
 
 #endif
