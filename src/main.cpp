@@ -12,7 +12,7 @@ using namespace std;
 #include "cli/clock.h"
 #include "gli/tool.h"
 #include "gli/window.h"
-#include "gli/draw.h"
+#include "gli/draw_pattern.h"
 
 void display();
 
