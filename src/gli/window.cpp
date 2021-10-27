@@ -20,7 +20,7 @@ void reshape(int w, int h)
     glTranslated(0, -h, 0);
 }
 
-void window::init(int *argc, char *argv[], Xy* size, void(* display) (void), int _wait_ms) {
+void window::init(int *argc, char *argv[], string title, Xy* size, void(* display) (void), int _wait_ms) {
     // glutの初期化
     glutInit(argc, argv);
 
@@ -29,7 +29,7 @@ void window::init(int *argc, char *argv[], Xy* size, void(* display) (void), int
     glutInitWindowSize(size->x, size->y);
 
     // ウィンドウ作成
-    glutCreateWindow("sample1");
+    glutCreateWindow(title.c_str());
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     wait_ms = _wait_ms;
