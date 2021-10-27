@@ -4,10 +4,13 @@
 #include <map>
 using namespace std;
 
+#include "../base/dim.h"
+#include "../base/color.h"
 #include "../cli/country.h"
 #include "../cli/city.h"
 #include "../cli/time.h"
 #include "../cli/clock.h"
+#include "gl.h"
 
 void reshapeDisplay(int, int);
 void display();
@@ -26,9 +29,7 @@ int main(int argc, char *argv[])
     glutDisplayFunc(display);
     glutReshapeFunc(reshapeDisplay);
 
-    // ウィンドウの初期化
-    glClearColor(0.0, 0.0, 1.0, 1.0);
-
+    // 初期描画
     display();
 
     // ウィンドウの描画
@@ -48,12 +49,8 @@ void reshapeDisplay(int w, int h)
     glTranslated(0, -h, 0);
 }
 
-// 午前かどうか
-// CLEAN クラスのインスタンス変数としてどこかで持つ
-bool is_morning = false;
-
 // 針を描画
-void draw_clock_needle(double len, double angle, float lineWidth)
+void draw_clock_needle(double len, double angle, float lineWidth, Rgb* color)
 {
     // BUG 線の太さが変わらない
     auto window_w = glutGet(GLUT_WINDOW_WIDTH);
@@ -62,10 +59,7 @@ void draw_clock_needle(double len, double angle, float lineWidth)
     auto window_half_y = window_h / 2;
 
     glBegin(GL_LINES);
-    if (is_morning)
-        glColor3ub(0, 0, 0);
-    else
-        glColor3ub(255, 255, 255);
+    Gl::color(color);
     glLineWidth(lineWidth);
     glVertex2i(window_half_x, window_half_y);
     glVertex2i(
@@ -103,28 +97,30 @@ void display(void)
     Clock *clock = new Clock(city_map, "tokyo");
 
     clock->record_now();
-    auto time_int_map = clock->get_city_time_by_int_map();
-    is_morning = time_int_map["hour"] / 12 == 0;
+    bool is_morning = clock->city_time->is_morning();
 
     // --- 描画ゾーン ---
     // 背景クリア
     glClear(GL_COLOR_BUFFER_BIT);
 
     if (is_morning)
-        glClearColor(0.0, 1.0, 1.0, 1.0);
+        Gl::clear_color(new Rgba(0, 255, 255, 255));
+        // glClearColor(0.0, 1.0, 1.0, 1.0);
     else
-        glClearColor(1.0, 0.0, 1.0, 1.0);
+        Gl::clear_color(new Rgba(255, 0, 255, 255));
+        // glClearColor(1.0, 0.0, 1.0, 1.0);
 
+    Rgb* color = (is_morning) ? new Rgb(0, 0, 0) : new Rgb(255, 255, 255);
     // 針を描画
-    draw_clock_needle(90, 
-        n_ary_convertor(time_int_map["hour"] % 12, 12, M_PI * 2) + n_ary_convertor(time_int_map["min"], 60, (M_PI * 2) / 12)
-        , 20.0);
-    draw_clock_needle(110, 
-        n_ary_convertor(time_int_map["min"], 60, M_PI * 2) + n_ary_convertor(time_int_map["min"], 60, (M_PI * 2) / 60),
-        4.0);
-    draw_clock_needle(120, 
-        n_ary_convertor(time_int_map["sec"], 60, M_PI * 2),
-        2.0);
+    draw_clock_needle(90,
+                      n_ary_convertor(clock->city_time->hour % 12, 12, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 12), 
+                      20.0, color);
+    draw_clock_needle(110,
+                      n_ary_convertor(clock->city_time->min, 60, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 60),
+                      4.0, color);
+    draw_clock_needle(120,
+                      n_ary_convertor(clock->city_time->sec, 60, M_PI * 2),
+                      2.0, color);
 
     glFlush();
 }
