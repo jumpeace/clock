@@ -13,7 +13,14 @@ void reshape(int w, int h)
     glTranslated(0, -h, 0);
 }
 
-void window_init(int *argc, char *argv[], Xy* size, void(* display) (void)) {
+int wait_ms;
+
+void timer(int value) {
+    glutPostRedisplay();
+    glutTimerFunc(wait_ms, timer, 0);
+}
+
+void window_init(int *argc, char *argv[], Xy* size, void(* display) (void), int _wait_ms) {
     // glutの初期化
     glutInit(argc, argv);
 
@@ -25,6 +32,8 @@ void window_init(int *argc, char *argv[], Xy* size, void(* display) (void)) {
     glutCreateWindow("sample1");
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+    wait_ms = _wait_ms;
+    glutTimerFunc(wait_ms, timer, 0);
 
     // 初期描画
     display();

@@ -15,9 +15,10 @@ using namespace std;
 
 void display();
 
+
 int main(int argc, char *argv[])
 {
-    window_init(&argc, argv, new Xy(600, 480), display);
+    window_init(&argc, argv, new Xy(600, 480), display, 100);
 
     return 0;
 }
@@ -30,7 +31,6 @@ void draw_clock_needle(float len, float angle, float lineWidth, Rgb *color)
 
     glBegin(GL_LINES);
     Gl::color(color);
-    glLineWidth(lineWidth);
     glVertex2i(center_pos->x, center_pos->y);
     glVertex2i(
         center_pos->x + (int)(len * sin(angle)),
@@ -95,7 +95,7 @@ void display(void)
     if (is_morning)
         Gl::clear_color(new Rgba(0, 255, 255, 255));
     else
-        Gl::clear_color(new Rgba(255, 0, 255, 255));
+        Gl::clear_color(new Rgba(255, 255, 0, 255));
 
     draw_circle(Gl::centerPos(), 155, new Rgb(255, 255, 255));
     draw_circle(Gl::centerPos(), 150, new Rgb(0, 0, 0));

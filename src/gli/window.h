@@ -4,6 +4,6 @@
 #include "../base/dim.h"
 
 void reshape();
-void window_init(int*, char **, Xy*, void(*) (void));
+void window_init(int*, char **, Xy*, void(*) (void), int);
 
 #endif
