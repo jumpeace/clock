@@ -1,5 +1,5 @@
-#ifndef _DRAW_H_
-#define _DRAW_H_
+#ifndef _DRAW_PATTERN_H_
+#define _DRAW_PATTERN_H_
 
 #include "../base/dim.h"
 #include "../base/color.h"
