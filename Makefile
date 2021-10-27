@@ -7,7 +7,7 @@ TARGET = dist/result.exe
 
 #	ソースファイル(*.c)の一覧
 SRCS = \
-	src/base/dim.cpp src/base/color.cpp \
+	src/base/dim.cpp src/base/color.cpp src/base/math.cpp \
 	src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp \
 	src/gli/tool.cpp src/gli/window.cpp \
 	src/main.cpp
@@ -17,7 +17,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 #	ヘッダファイルの一覧
 HEADERS = \
-	src/base/dim.h src/base/color.h \
+	src/base/dim.h src/base/color.h src/base/math.h \
 	src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h \
 	src/gli/tool.h src/gli/window.h
 

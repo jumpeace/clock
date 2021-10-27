@@ -6,6 +6,7 @@ using namespace std;
 
 #include "base/dim.h"
 #include "base/color.h"
+#include "base/math.h"
 #include "cli/country.h"
 #include "cli/city.h"
 #include "cli/time.h"
@@ -36,12 +37,6 @@ void draw_clock_needle(float len, float angle, float lineWidth, Rgb *color)
         center_pos->x + (int)(len * sin(angle)),
         center_pos->y - (int)(len * cos(angle)));
     glEnd();
-}
-
-// n_1進法からn_2進法に変換
-float n_ary_convertor(float src, float n1, float n2)
-{
-    return src * (n2 / n1);
 }
 
 void draw_circle(Xy* center_pos, float round, Rgb* filling_color) {
