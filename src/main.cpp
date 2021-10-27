@@ -4,13 +4,13 @@
 #include <map>
 using namespace std;
 
-#include "../base/dim.h"
-#include "../base/color.h"
-#include "../cli/country.h"
-#include "../cli/city.h"
-#include "../cli/time.h"
-#include "../cli/clock.h"
-#include "gl.h"
+#include "base/dim.h"
+#include "base/color.h"
+#include "cli/country.h"
+#include "cli/city.h"
+#include "cli/time.h"
+#include "cli/clock.h"
+#include "gli/gl.h"
 
 void reshapeDisplay(int, int);
 void display();
