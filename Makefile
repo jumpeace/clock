@@ -19,7 +19,8 @@ OBJS = $(SRCS:.cpp=.o)
 HEADERS = \
 	src/base/dim.h src/base/color.h src/base/math.h \
 	src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h \
-	src/gli/tool.h src/gli/window.h src/gli/draw_pattern.h src/gli/draw.h
+	src/gli/tool.h src/gli/window.h src/gli/draw_pattern.h src/gli/draw.h \
+	src/global.h
 
 #	コンパイラ・リンカの指定
 CC = g++

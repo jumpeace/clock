@@ -15,14 +15,29 @@ using namespace std;
 #include "gli/window.h"
 #include "gli/draw_pattern.h"
 #include "gli/draw.h"
-// using namespace Draw;
+#include "global.h"
 
 void display();
 
 
 int main(int argc, char *argv[])
 {
+    // 国と都市を定義
+    global::countries["usa"] = new Country("USA");
+    global::countries["ingland"] = new Country("Ingland");
+    global::countries["japan"] = new Country("Japan");
+
+    global::cities["tokyo"] = new City("Tokyo", global::countries["japan"], 9);
+    global::cities["london"] = new City("London", global::countries["ingland"], 0);
+    global::cities["new-york"] = new City("New York", global::countries["usa"], -5);
+    global::cities["san-francisco"] = new City("San Francisco", global::countries["usa"], -8);
+
+    global::clock = new Clock(global::cities, "tokyo");
+
+    global::draw = new Draw(global::clock);
+
     window_init(&argc, argv, new Xy(600, 480), display, 100);
+
 
     return 0;
 }
@@ -30,31 +45,31 @@ int main(int argc, char *argv[])
 // ウィンドウの表示内容を更新する関数
 void display(void)
 {
-    // 国と都市を定義
-    // CLEAN 別の場所で常に変数として持つ（毎回読み込むのは良くないため）
-    map<string, Country *> country_map;
+    // // 国と都市を定義
+    // // CLEAN 別の場所で常に変数として持つ（毎回読み込むのは良くないため）
+    // map<string, Country *> country_map;
 
-    country_map["usa"] = new Country("USA");
-    country_map["ingland"] = new Country("Ingland");
-    country_map["japan"] = new Country("Japan");
+    // country_map["usa"] = new Country("USA");
+    // country_map["ingland"] = new Country("Ingland");
+    // country_map["japan"] = new Country("Japan");
 
-    map<string, City *> city_map;
+    // map<string, City *> city_map;
 
-    city_map["tokyo"] = new City("Tokyo", country_map["japan"], 9);
-    city_map["london"] = new City("London", country_map["ingland"], 0);
-    city_map["new-york"] = new City("New York", country_map["usa"], -5);
-    city_map["san-francisco"] = new City("San Francisco", country_map["usa"], -8);
+    // city_map["tokyo"] = new City("Tokyo", country_map["japan"], 9);
+    // city_map["london"] = new City("London", country_map["ingland"], 0);
+    // city_map["new-york"] = new City("New York", country_map["usa"], -5);
+    // city_map["san-francisco"] = new City("San Francisco", country_map["usa"], -8);
 
     // 時刻を取得
     // CLEAN 別の場所で常に変数として持つ（毎回読み込むのは良くないため）
-    Clock *clock = new Clock(city_map, "tokyo");
+    // Clock *clock = new Clock(city_map, "tokyo");
 
-    clock->record_now();
+    global::clock->record_now();
 
     // --- 描画ゾーン ---
-    Draw* draw = new Draw(clock);
-    draw->background();
-    draw->clock_needles();
+    // Draw* draw = new Draw(clock);
+    global::draw->background();
+    global::draw->clock_needles();
 
     glFlush();
 }
