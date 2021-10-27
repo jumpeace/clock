@@ -28,12 +28,12 @@ void Draw::clock_needles() {
 
     // 針を描画
     draw_clock_needle(90,
-                      n_ary_convertor(clock->city_time->hour % 12, 12, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 12),
+                      math::n_ary_convertor(clock->city_time->hour % 12, 12, M_PI * 2) + math::n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 12),
                       20.0, new Rgb(255, 255, 255));
     draw_clock_needle(110,
-                      n_ary_convertor(clock->city_time->min, 60, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 60),
+                      math::n_ary_convertor(clock->city_time->min, 60, M_PI * 2) + math::n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 60),
                       4.0, new Rgb(255, 255, 255));
     draw_clock_needle(120,
-                      n_ary_convertor(clock->city_time->sec, 60, M_PI * 2),
+                      math::n_ary_convertor(clock->city_time->sec, 60, M_PI * 2),
                       2.0, new Rgb(255, 255, 255));
 }

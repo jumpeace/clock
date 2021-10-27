@@ -14,7 +14,7 @@ void draw_circle(Xy* center_pos, float round, Rgb* filling_color) {
     
     for (auto i = 0; i < edge_num; i++)
     {
-        angle = n_ary_convertor(i, edge_num, M_PI * 2);
+        angle = math::n_ary_convertor(i, edge_num, M_PI * 2);
         glVertex2i(
             center_pos->x + (int)(round * sin(angle)),
             center_pos->y - (int)(round * cos(angle))
