@@ -1,19 +1,13 @@
 #include <GL/glut.h>
-#include <cmath>
 #include <iostream>
 #include <map>
 using namespace std;
 
 #include "base/dim.h"
-#include "base/color.h"
-#include "base/math.h"
 #include "cli/country.h"
 #include "cli/city.h"
-#include "cli/time.h"
 #include "cli/clock.h"
-#include "gli/tool.h"
 #include "gli/window.h"
-#include "gli/draw_pattern.h"
 #include "gli/draw.h"
 #include "global.h"
 
