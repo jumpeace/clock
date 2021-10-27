@@ -6,13 +6,19 @@
 TARGET = dist/result.exe
 
 #	ソースファイル(*.c)の一覧
-SRCS = src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp src/gli/main.cpp
+SRCS = \
+	src/lib/dim.cpp src/lib/color.cpp \
+	src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp \
+	src/gli/gl.cpp src/gli/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:.cpp=.o)
 
 #	ヘッダファイルの一覧
-HEADERS = src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h
+HEADERS = \
+	src/lib/dim.h src/lib/color.h \
+	src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h \
+	src/gli/gl.h
 
 #	コンパイラ・リンカの指定
 CC = g++
