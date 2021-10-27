@@ -1,4 +1,5 @@
 #include <GL/glut.h>
+#include <cmath>
 
 #include "tool.h"
 #include "../base/math.h"

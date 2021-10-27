@@ -1,4 +1,5 @@
 #include <GL/glut.h>
+#include <cmath>
 #include <iostream>
 #include <map>
 using namespace std;
@@ -13,6 +14,8 @@ using namespace std;
 #include "gli/tool.h"
 #include "gli/window.h"
 #include "gli/draw_pattern.h"
+#include "gli/draw.h"
+// using namespace Draw;
 
 void display();
 
@@ -47,30 +50,11 @@ void display(void)
     Clock *clock = new Clock(city_map, "tokyo");
 
     clock->record_now();
-    bool is_morning = clock->city_time->is_morning();
 
     // --- 描画ゾーン ---
-    // 背景クリア
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    if (is_morning)
-        Gl::clear_color(new Rgba(0, 255, 255, 255));
-    else
-        Gl::clear_color(new Rgba(255, 255, 0, 255));
-
-    draw_circle(Gl::centerPos(), 155, new Rgb(255, 255, 255));
-    draw_circle(Gl::centerPos(), 150, new Rgb(0, 0, 0));
-
-    // 針を描画
-    draw_clock_needle(90,
-                      n_ary_convertor(clock->city_time->hour % 12, 12, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 12),
-                      20.0, new Rgb(255, 255, 255));
-    draw_clock_needle(110,
-                      n_ary_convertor(clock->city_time->min, 60, M_PI * 2) + n_ary_convertor(clock->city_time->min, 60, (M_PI * 2) / 60),
-                      4.0, new Rgb(255, 255, 255));
-    draw_clock_needle(120,
-                      n_ary_convertor(clock->city_time->sec, 60, M_PI * 2),
-                      2.0, new Rgb(255, 255, 255));
+    Draw* draw = new Draw(clock);
+    draw->background();
+    draw->clock_needles();
 
     glFlush();
 }
