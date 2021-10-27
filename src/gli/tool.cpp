@@ -1,4 +1,4 @@
-#include "gl.h"
+#include "tool.h"
 
 void Gl::color(Rgb* rgb)
 {
