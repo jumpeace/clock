@@ -19,6 +19,10 @@ bool Clock::set_city(string city_key)
     return true;
 }
 
+City* Clock::get_now_city() {
+    return now_city;
+}
+
 void Clock::record_now()
 { 
     // --- 世界標準時で取得するゾーン ---

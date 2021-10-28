@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <cmath>
+#include <iostream>
 
 #include "tool.h"
 #include "../base/math.h"
@@ -51,8 +52,9 @@ void drawPattern::_str(string str, Xy *init_pos)
     }
 }
 
+// 左右のボタンをつけて、世界時計のための入力装置を作る
 void drawPattern::textbox(
-    string text, int text_num,
+    string text, int text_num_max,
     Rgb *text_color, Rgb *bg_color, Rgb *border_color,
     Xy *start_pos, Xy *pad_size, Xy *border_size)
 {
@@ -61,28 +63,91 @@ void drawPattern::textbox(
     
     glBegin(GL_QUADS);
     Gl::color(border_color);
-    glVertex2i(start_pos->x - pad_size->x - border_size->x / 2,
-               start_pos->y - pad_size->y - border_size->y / 2);
-    glVertex2i(start_pos->x + pad_size->x + border_size->x / 2 + (c_size * text_num),
-               start_pos->y - pad_size->y - border_size->y / 2);
-    glVertex2i(start_pos->x + pad_size->x + border_size->x / 2 + (c_size * text_num),
-               start_pos->y + c_size + pad_size->y + border_size->y / 2);
-    glVertex2i(start_pos->x - pad_size->x - border_size->x / 2,
-               start_pos->y + c_size + pad_size->y + border_size->y / 2);
+    glVertex2i(start_pos->x - border_size->x / 2,
+               start_pos->y - border_size->y / 2);
+    glVertex2i(start_pos->x + pad_size->x * 2 + border_size->x / 2 + (c_size * text_num_max),
+               start_pos->y - border_size->y / 2);
+    glVertex2i(start_pos->x + pad_size->x * 2 + border_size->x / 2 + (c_size * text_num_max),
+               start_pos->y + c_size + pad_size->y * 2 + border_size->y / 2);
+    glVertex2i(start_pos->x - border_size->x / 2,
+               start_pos->y + c_size + pad_size->y * 2 + border_size->y / 2);
     glEnd();
 
     glBegin(GL_QUADS);
     Gl::color(bg_color);
-    glVertex2i(start_pos->x - pad_size->x + border_size->x / 2,
-               start_pos->y - pad_size->y + border_size->y / 2);
-    glVertex2i(start_pos->x + pad_size->x - border_size->x / 2 + (c_size * text_num),
-               start_pos->y - pad_size->y + border_size->y / 2);
-    glVertex2i(start_pos->x + pad_size->x - border_size->x / 2 + (c_size * text_num),
-               start_pos->y + c_size + pad_size->y - border_size->y / 2);
-    glVertex2i(start_pos->x - pad_size->x + border_size->x / 2,
-               start_pos->y + c_size + pad_size->y - border_size->y / 2);
+    glVertex2i(start_pos->x + border_size->x / 2,
+               start_pos->y + border_size->y / 2);
+    glVertex2i(start_pos->x + pad_size->x * 2 - border_size->x / 2 + (c_size * text_num_max),
+               start_pos->y + border_size->y / 2);
+    glVertex2i(start_pos->x + pad_size->x * 2 - border_size->x / 2 + (c_size * text_num_max),
+               start_pos->y + c_size + pad_size->y * 2 - border_size->y / 2);
+    glVertex2i(start_pos->x + border_size->x / 2,
+               start_pos->y + c_size + pad_size->y * 2 - border_size->y / 2);
     glEnd();
 
     Gl::color(text_color);
-    drawPattern::_str(text, new Xy(start_pos->x, start_pos->y + c_size));
+    drawPattern::_str(text, new Xy(start_pos->x + pad_size->x, start_pos->y + pad_size->y + c_size));
+}
+drawPattern::Combobox::Combobox(
+    vector<string> _texts, int _text_num_max,
+    Rgb *_text_color, Rgb *_bg_color, Rgb *_border_color,
+    Xy *_start_pos, Xy *_pad_size, Xy *_border_size)
+{
+    c_size = 9;
+    texts = _texts;
+    texts_num = texts.size();
+    now_text = 0;
+    text_num_max = _text_num_max;
+    text_color = _text_color;
+    bg_color = _bg_color;
+    border_color = _border_color;
+    start_pos = _start_pos;
+    pad_size = _pad_size;
+    border_size = _border_size;
+}
+
+void drawPattern::Combobox::draw() {
+    drawPattern::textbox("<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0), 
+    new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y), pad_size, border_size);
+    drawPattern::textbox(texts[now_text], text_num_max, text_color, bg_color, border_color, start_pos, pad_size, border_size);
+    drawPattern::textbox(">", 1, text_color, bg_color, border_color, 
+    new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y), pad_size, border_size);
+}
+
+bool drawPattern::Combobox::set_now(int new_now) {
+    if (new_now >= texts_num || new_now < 0) return false;
+    now_text = new_now;
+    return true;
+}
+
+int drawPattern::Combobox::get_now() {
+    return now_text;
+}
+
+string drawPattern::Combobox::get_now_text() {
+    return texts[drawPattern::Combobox::get_now()];
+}
+
+int drawPattern::Combobox::get_texts_num() {
+    return texts_num;
+}
+
+bool drawPattern::Combobox::isInLeftButton(Xy* mouse) {
+    auto button_start_pos = new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y);
+    return mouse->isIn(
+        button_start_pos,
+        new Xy(button_start_pos->x + c_size + pad_size->x * 2, start_pos->y + c_size + pad_size->y * 2)
+    );
+    return mouse->isIn(
+        button_start_pos,
+        new Xy(button_start_pos->x + pad_size->x * 2 + c_size, button_start_pos->y + c_size + pad_size->y)
+    );
+}
+bool drawPattern::Combobox::isInRightButton(Xy* mouse) {
+    // cout << "right_x_min" << start_pos->x + c_size * text_num_max + pad_size->x * 2 << "\n";
+    auto button_start_pos = new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y);
+    return mouse->isIn(
+        button_start_pos,
+        new Xy(button_start_pos->x + pad_size->x * 2 + c_size, button_start_pos->y + c_size + pad_size->y)
+    );
 }

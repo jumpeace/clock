@@ -21,6 +21,7 @@ public:
     Clock(map<string, City*>, string);
 
     bool set_city(string);
+    City* get_now_city();
 
     void record_now();
 

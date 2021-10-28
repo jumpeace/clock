@@ -10,7 +10,7 @@ SRCS = \
 	src/base/dim.cpp src/base/color.cpp src/base/math.cpp \
 	src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp \
 	src/gli/tool.cpp src/gli/window.cpp src/gli/draw_pattern.cpp src/gli/draw.cpp \
-	src/main.cpp
+	src/global.cpp src/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
 OBJS = $(SRCS:.cpp=.o)

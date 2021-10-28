@@ -7,6 +7,7 @@ public:
     float x;
     float y;
     Xy(float, float);
+    bool isIn(Xy*, Xy*);
 };
 
 

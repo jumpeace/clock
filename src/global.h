@@ -2,6 +2,7 @@
 #define _GLOBAL_H_
 
 #include <map>
+#include <vector>
 #include <iostream>
 using namespace std;
 
@@ -9,12 +10,15 @@ using namespace std;
 #include "cli/city.h"
 #include "cli/clock.h"
 #include "gli/draw.h"
+#include "gli/draw_pattern.h"
 
 namespace global {
-    map<string, Country *> countries;
-    map<string, City *> cities;
-    Clock* clock;
-    Draw* draw;
+    extern map<string, Country *> countries;
+    extern map<string, City *> cities;
+    extern vector<string> city_keys;
+    extern Clock* clock;
+    extern Draw* draw;
+    extern drawPattern::Combobox* city_combo;
 }
 
 #endif
