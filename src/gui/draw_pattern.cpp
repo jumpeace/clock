@@ -17,7 +17,7 @@ void drawPattern::circle(Xy *center_pos, float round, Rgb *filling_color)
     for (auto i = 0; i < edge_num; i++)
     {
         angle = math::n_ary_convertor(i, edge_num, M_PI * 2);
-        glVertex2i(
+        glVertex2f(
             center_pos->x + (int)(round * sin(angle)),
             center_pos->y - (int)(round * cos(angle)));
     }
@@ -25,19 +25,50 @@ void drawPattern::circle(Xy *center_pos, float round, Rgb *filling_color)
     glEnd();
 }
 
+void drawPattern::line(Xy *p1, Xy *p2, float line_width, Rgb* color)
+{
+    float denseness = 2;
+    glPointSize(line_width);
+    auto diff = new Xy(p2->x - p1->x, p2->y - p1->y);
+    float angle = atan(diff->y / diff->x);
+    // cout << "angle:" << angle << "\n";
+    int div_num = sqrt(pow(diff->x, 2) + pow(diff->y, 2)) * denseness;
+    auto step_w = new Xy(diff->x / div_num, diff->y / div_num);
+    for (int i = 0; i < div_num; i++)
+    {
+        drawPattern::circle(new Xy(
+            p1->x + step_w->x * (i + 0.5), 
+            p1->y + step_w->y * (i + 0.5)), 
+        line_width / 2.0, color);
+        // glBegin(GL_POINTS);
+        // glVertex2f(p1->x + step_w->x * (i + 0.5), 
+        // p1->y + step_w->y * (i + 0.5));
+        // // glVertex2i(p1->x + step_w->x * (i + 0.5), 
+        // // p1->y + step_w->y * (i + 0.5));
+        // glEnd();
+    }
+}
+
 // 針を描画
-void drawPattern::clock_needle(float len, float angle, float lineWidth, Rgb *color)
+void drawPattern::clock_needle(float len, float angle, float line_width, Rgb *color)
 {
     // BUG 線の太さが変わらない
     auto center_pos = Gl::centerPos();
 
-    glBegin(GL_LINES);
+
     Gl::color3(color);
-    glVertex2i(center_pos->x, center_pos->y);
-    glVertex2i(
-        center_pos->x + (int)(len * sin(angle)),
-        center_pos->y - (int)(len * cos(angle)));
-    glEnd();
+    drawPattern::line(
+        new Xy(center_pos->x, center_pos->y),
+        new Xy(center_pos->x + (int)(len * sin(angle)),
+        center_pos->y - (int)(len * cos(angle))), line_width,
+        color
+    );
+    // glBegin(GL_LINES);
+    // glVertex2i(center_pos->x, center_pos->y);
+    // glVertex2i(
+    //     center_pos->x + (int)(len * sin(angle)),
+    //     center_pos->y - (int)(len * cos(angle)));
+    // glEnd();
 }
 
 void drawPattern::_str(string str, Xy *init_pos)
@@ -60,7 +91,7 @@ void drawPattern::textbox(
 {
 
     float c_size = 9;
-    
+
     glBegin(GL_QUADS);
     Gl::color3(border_color);
     glVertex2i(start_pos->x - border_size->x / 2,
@@ -106,47 +137,62 @@ drawPattern::Combobox::Combobox(
     border_size = _border_size;
 }
 
-void drawPattern::Combobox::draw() {
-    drawPattern::textbox("<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0), 
-    new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y), pad_size, border_size);
-    drawPattern::textbox(texts[now_text], text_num_max, text_color, bg_color, border_color, start_pos, pad_size, border_size);
-    drawPattern::textbox(">", 1, text_color, bg_color, border_color, 
-    new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y), pad_size, border_size);
+void drawPattern::Combobox::rePos(Xy* pos) {
+    start_pos = pos;
 }
 
-bool drawPattern::Combobox::set_now(int new_now) {
-    if (new_now >= texts_num || new_now < 0) return false;
+void drawPattern::Combobox::draw()
+{
+    rePos(new Xy(
+        Gl::centerPos()->x - size()->x * 0.5, Gl::centerPos()->y - 220));
+    drawPattern::textbox("<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
+                         new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y), pad_size, border_size);
+    drawPattern::textbox(texts[now_text], text_num_max, text_color, bg_color, border_color, start_pos, pad_size, border_size);
+    drawPattern::textbox(">", 1, text_color, bg_color, border_color,
+                         new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y), pad_size, border_size);
+}
+
+bool drawPattern::Combobox::set_now(int new_now)
+{
+    if (new_now >= texts_num || new_now < 0)
+        return false;
     now_text = new_now;
     return true;
 }
 
-int drawPattern::Combobox::get_now() {
+int drawPattern::Combobox::get_now()
+{
     return now_text;
 }
 
-string drawPattern::Combobox::get_now_text() {
+string drawPattern::Combobox::get_now_text()
+{
     return texts[drawPattern::Combobox::get_now()];
 }
 
-int drawPattern::Combobox::get_texts_num() {
+int drawPattern::Combobox::get_texts_num()
+{
     return texts_num;
 }
 
-bool drawPattern::Combobox::isInLeftButton(Xy* mouse) {
+Xy* drawPattern::Combobox::size() {
+    return new Xy(c_size * (text_num_max + 2), c_size + pad_size->y * 2);
+}
+
+bool drawPattern::Combobox::isInLeftButton(Xy *mouse)
+{
     auto button_start_pos = new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y);
     return mouse->isIn(
         button_start_pos,
-        new Xy(button_start_pos->x + c_size + pad_size->x * 2, start_pos->y + c_size + pad_size->y * 2)
-    );
+        new Xy(button_start_pos->x + c_size + pad_size->x * 2, start_pos->y + c_size + pad_size->y * 2));
     return mouse->isIn(
         button_start_pos,
-        new Xy(button_start_pos->x + pad_size->x * 2 + c_size, button_start_pos->y + c_size + pad_size->y)
-    );
+        new Xy(button_start_pos->x + pad_size->x * 2 + c_size, button_start_pos->y + c_size + pad_size->y));
 }
-bool drawPattern::Combobox::isInRightButton(Xy* mouse) {
+bool drawPattern::Combobox::isInRightButton(Xy *mouse)
+{
     auto button_start_pos = new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y);
     return mouse->isIn(
         button_start_pos,
-        new Xy(button_start_pos->x + pad_size->x * 2 + c_size, button_start_pos->y + c_size + pad_size->y)
-    );
+        new Xy(button_start_pos->x + pad_size->x * 2 + c_size, button_start_pos->y + c_size + pad_size->y));
 }

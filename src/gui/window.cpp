@@ -41,8 +41,9 @@ void reshape(int w, int h)
     glTranslated(0, -h, 0);
 }
 
-void window::init(int *argc, char *argv[], string title, Xy *size, void (*display)(void), int _wait_ms)
+Window::Window(int *argc, char *argv[], string title, Xy *size, void (*_display)(void), int _wait_ms)
 {
+    display = _display;
     // glutの初期化
     glutInit(argc, argv);
 
@@ -76,10 +77,14 @@ void window::init(int *argc, char *argv[], string title, Xy *size, void (*displa
     global::images["10"] = new Image("img/10.png");
     global::images["11"] = new Image("img/11.png");
     global::images["12"] = new Image("img/12.png");
+}
 
+void Window::init() {
     // 初期描画
     display();
+}
 
+void Window::mainLoop() {
     // ウィンドウの描画
     glutMainLoop();
 }

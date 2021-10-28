@@ -9,6 +9,8 @@ namespace drawPattern
 {
     // 塗りつぶされた円を描画
     void circle(Xy *, float, Rgb *);
+    // 線
+    void line(Xy*, Xy*, float, Rgb*);
     // 針を描画
     void clock_needle(float, float, float, Rgb *);
     // 文字列
@@ -36,6 +38,8 @@ namespace drawPattern
         int get_texts_num();
         bool isInLeftButton(Xy*);
         bool isInRightButton(Xy*);
+        void rePos(Xy*);
+        Xy* size();
     };
 }
 

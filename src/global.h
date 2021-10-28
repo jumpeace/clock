@@ -12,8 +12,10 @@ using namespace std;
 #include "gui/draw.h"
 #include "gui/draw_pattern.h"
 #include "gui/image.h"
+#include "gui/window.h"
 
 namespace global {
+    extern Window* window;
     extern map<string, Country *> countries;
     extern map<string, City *> cities;
     extern vector<string> city_keys;

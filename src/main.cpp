@@ -8,6 +8,7 @@ using namespace std;
 #include "cui/country.h"
 #include "cui/city.h"
 #include "cui/clock.h"
+#include "gui/tool.h"
 #include "gui/window.h"
 #include "gui/draw.h"
 #include "gui/draw_pattern.h"
@@ -46,16 +47,22 @@ int main(int argc, char *argv[])
     }
     global::city_combo = new drawPattern::Combobox(city_names, 15,
         new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
-        new Xy(100, 130), new Xy(5, 8), new Xy(1, 1)
+        // new Xy(Gl::centerPos()->x, Gl::centerPos()->y - 220), 
+        new Xy(0, 0), 
+        new Xy(5, 8), new Xy(1, 1)
     );
-    global::city_combo->set_now(init_city_i);
 
-    window::init(&argc, argv, "My Clock", new Xy(600, 480), display, 5);
+    global::city_combo->set_now(init_city_i);
+    
+    global::window = new Window(&argc, argv, "My Clock", new Xy(600, 480), display, 500);
+    global::window->init();
+
+    cout << "position" << Gl::centerPos()->x << ", " << Gl::centerPos() -> y - 220 << "\n";
+
+    global::window->mainLoop();
 
     return 0;
 }
-
-float angle = 0;
 
 // ウィンドウの表示内容を更新する関数
 void display(void)
@@ -73,11 +80,6 @@ void display(void)
 
     global::city_combo->draw();
 
-    // global::images["1"]->putSprite(new Xy(100, 100), 0.1, 0);
-    angle += M_PI / 180.0;
-    if (angle >= M_PI * 2) angle -= M_PI * 2;
-    global::images["2"]->putSprite(new Xy(100, 200), 0.1, angle);
-    // global::images["72"]->putSprite(new Xy(100, 100));
 
     glFlush();
 }

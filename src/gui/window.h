@@ -5,8 +5,12 @@
 using namespace std;
 #include "../base/dim.h"
 
-namespace window {
-    void init(int*, char **, string, Xy*, void(*) (void), int);
-}
+class Window {
+public:
+    void(*display) (void);
+    Window(int*, char **, string, Xy*, void(*) (void), int);
+    void init();
+    void mainLoop();
+};
 
 #endif

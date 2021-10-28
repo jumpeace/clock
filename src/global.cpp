@@ -1,6 +1,7 @@
 #include "global.h"
 
 namespace global {
+    Window* window;
     map<string, Country *> countries;
     map<string, City *> cities;
     vector<string> city_keys;
