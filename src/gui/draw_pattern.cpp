@@ -144,7 +144,6 @@ bool drawPattern::Combobox::isInLeftButton(Xy* mouse) {
     );
 }
 bool drawPattern::Combobox::isInRightButton(Xy* mouse) {
-    // cout << "right_x_min" << start_pos->x + c_size * text_num_max + pad_size->x * 2 << "\n";
     auto button_start_pos = new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y);
     return mouse->isIn(
         button_start_pos,

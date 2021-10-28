@@ -1,4 +1,7 @@
 #include "image.h"
+
+#include <cmath>
+
 #include "tool.h"
 #include "../base/color.h"
 
@@ -13,8 +16,8 @@ Image::Image(string filename) {
     img = pngBind(filename.c_str(), PNG_NOMIPMAP, PNG_ALPHA, &info, GL_CLAMP, GL_NEAREST, GL_NEAREST);
 }
 
-void Image::putSprite(Xy* pos) {
-    auto size = new Xy(info.Width, info.Height);
+void Image::putSprite(Xy* pos, float scale, float angle) {
+    auto size = new Xy(info.Width * scale, info.Height * scale);
 
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
@@ -23,16 +26,22 @@ void Image::putSprite(Xy* pos) {
 
     glBegin(GL_QUADS);
     glTexCoord2i(0, 0);
-    glVertex2i(pos->x, pos->y);
+    glVertex2i(pos->x - size->x * 0.5 * cos(angle) + size->y * 0.5 * sin(angle),
+    pos->y - size->x * 0.5 * sin(angle) - size->y * 0.5 * cos(angle)
+    );
 
     glTexCoord2i(0, 1);
-    glVertex2i(pos->x, pos->y + size->y);
+    glVertex2i(pos->x - size->x * 0.5 * cos(angle) - size->y * 0.5 * sin(angle), 
+    pos->y - size->x * 0.5 * sin(angle) + size->y * 0.5 * cos(angle));
 
     glTexCoord2i(1, 1);
-    glVertex2i(pos->x + size->x, pos->y + size->y);
+    glVertex2i(pos->x + size->x * 0.5 * cos(angle) - size->y * 0.5 * sin(angle),
+    pos->y + size->x * 0.5 * sin(angle) + size->y * 0.5 * cos(angle)
+    );
 
-    glTexCoord2i(0, 1);
-    glVertex2i(pos->x + size->x, pos->y);
+    glTexCoord2i(1, 0);
+    glVertex2i(pos->x + size->x * 0.5 * cos(angle) + size->y * 0.5 * sin(angle), 
+    pos->y + size->x * 0.5 * sin(angle) - size->y * 0.5 * cos(angle));
 
     glEnd();
 

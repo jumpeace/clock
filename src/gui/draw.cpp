@@ -41,5 +41,4 @@ void Draw::clock_needles() {
 
 
 void Draw::hour_texts() {
-
 }

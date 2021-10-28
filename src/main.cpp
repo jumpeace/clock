@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
+#include <cmath>
 using namespace std;
 
 #include "base/dim.h"
@@ -54,22 +55,29 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+float angle = 0;
+
 // ウィンドウの表示内容を更新する関数
 void display(void)
 {
+
+    glClear(GL_COLOR_BUFFER_BIT);
     // 現在時刻を記録
     global::clock->record_now();
 
-    // // --- 描画ゾーン ---
-    // // 背景
-    // global::draw->background();
-    // // 時計の針
-    // global::draw->clock_needles();
+    // --- 描画ゾーン ---
+    // 背景
+    global::draw->background();
+    // 時計の針
+    global::draw->clock_needles();
 
-    // global::city_combo->draw();
+    global::city_combo->draw();
 
-    // global::images["1"]->putSprite(new Xy(100, 100));
-    // global::images["2"]->putSprite(new Xy(100, 100));
+    // global::images["1"]->putSprite(new Xy(100, 100), 0.1, 0);
+    angle += M_PI / 180.0;
+    if (angle >= M_PI * 2) angle -= M_PI * 2;
+    global::images["2"]->putSprite(new Xy(100, 200), 0.1, angle);
+    // global::images["72"]->putSprite(new Xy(100, 100));
 
     glFlush();
 }

@@ -13,7 +13,7 @@ public:
     pngInfo info;
     static void init();
     Image(string);
-    void putSprite(Xy*);
+    void putSprite(Xy*, float, float);
 };
 
 #endif

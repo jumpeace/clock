@@ -47,7 +47,7 @@ void window::init(int *argc, char *argv[], string title, Xy *size, void (*displa
     glutInit(argc, argv);
 
     // ウィンドウの初期化
-    glutInitDisplayMode(GLUT_RGBA);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA);
     glutInitWindowSize(size->x, size->y);
 
     // TODO image初期化
@@ -59,6 +59,10 @@ void window::init(int *argc, char *argv[], string title, Xy *size, void (*displa
     glutMouseFunc(mouseFunc);
     wait_ms = _wait_ms;
     glutTimerFunc(wait_ms, timer, 0);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
     global::images["1"] = new Image("img/1.png");
     global::images["2"] = new Image("img/2.png");
