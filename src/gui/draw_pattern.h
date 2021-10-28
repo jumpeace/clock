@@ -15,6 +15,24 @@ namespace drawPattern
     void clock_needle(float, float, float, Rgb *);
     // 文字列
     void _str(string str, Xy *init_pos);
+    class Textbox {
+    private:
+        int text_num_max;
+    public:
+        float c_size;
+        string text;
+        Rgb* bg_color;
+        Rgb* border_color;
+        Rgb* text_color;
+        Xy *start_pos;
+        Xy *pad_size;
+        Xy *border_size;
+        Textbox(string, int, Rgb *, Rgb *, Rgb *, Xy *, Xy *, Xy *);
+        void draw();
+        void rePos(Xy*);
+        void setText(string);
+        Xy* size();
+    };
     void textbox(string, int, Rgb *, Rgb *, Rgb *, Xy *, Xy *, Xy *);
     class Combobox {
     private:

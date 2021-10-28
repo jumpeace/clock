@@ -21,7 +21,8 @@ namespace global {
     extern vector<string> city_keys;
     extern Clock* clock;
     extern Draw* draw;
-    extern drawPattern::Combobox* city_combo;
+    extern drawPattern::Combobox* city_combobox;
+    extern drawPattern::Textbox* date_textbox;
     extern map<string, Image*> images;
 }
 

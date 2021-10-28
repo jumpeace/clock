@@ -7,6 +7,7 @@ namespace global {
     vector<string> city_keys;
     Clock* clock;
     Draw* draw;
-    drawPattern::Combobox* city_combo;
+    drawPattern::Combobox* city_combobox;
+    drawPattern::Textbox* date_textbox;
     map<string, Image*> images;
 }

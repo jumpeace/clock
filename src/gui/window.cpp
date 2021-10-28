@@ -19,15 +19,15 @@ void mouseFunc(int button, int state, int x, int y)
 {
     if (button != GLUT_LEFT_BUTTON || state != GLUT_DOWN)
         return;
-    if (global::city_combo->isInLeftButton(new Xy(x, y))) {
-        global::city_combo->set_now(
-            (global::city_combo->get_now() + global::city_combo->get_texts_num() - 1) % global::city_combo->get_texts_num());
+    if (global::city_combobox->isInLeftButton(new Xy(x, y))) {
+        global::city_combobox->set_now(
+            (global::city_combobox->get_now() + global::city_combobox->get_texts_num() - 1) % global::city_combobox->get_texts_num());
     }
-    else if (global::city_combo->isInRightButton(new Xy(x, y))) {
-        global::city_combo->set_now(
-            (global::city_combo->get_now() + 1) % global::city_combo->get_texts_num());
+    else if (global::city_combobox->isInRightButton(new Xy(x, y))) {
+        global::city_combobox->set_now(
+            (global::city_combobox->get_now() + 1) % global::city_combobox->get_texts_num());
     }
-    global::clock->set_city(global::city_keys[global::city_combo->get_now()]);
+    global::clock->set_city(global::city_keys[global::city_combobox->get_now()]);
 }
 
 // 画面サイズが変わっても、座標が混乱しないようにする

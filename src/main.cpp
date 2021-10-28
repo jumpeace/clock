@@ -19,15 +19,22 @@ void display();
 int main(int argc, char *argv[])
 {
     // 国
-    global::countries["usa"] = new Country("USA");
+    global::countries["china"] = new Country("China");
+    global::countries["egypt"] = new Country("Egypt");
+    global::countries["france"] = new Country("France");
     global::countries["ingland"] = new Country("Ingland");
     global::countries["japan"] = new Country("Japan");
+    global::countries["usa"] = new Country("USA");
 
     // 都市
+    global::cities["beljing"] = new City("Beljing", global::countries["china"], 8);
+    global::cities["cairo"] = new City("Cairo", global::countries["egypt"], 2);
+    global::cities["honolulu"] = new City("Honolulu", global::countries["usa"], -10);
     global::cities["london"] = new City("London", global::countries["ingland"], 0);
-    global::cities["tokyo"] = new City("Tokyo", global::countries["japan"], 9);
     global::cities["new-york"] = new City("New York", global::countries["usa"], -5);
+    global::cities["paris"] = new City("Paris", global::countries["france"], 1);
     global::cities["san-francisco"] = new City("San Francisco", global::countries["usa"], -8);
+    global::cities["tokyo"] = new City("Tokyo", global::countries["japan"], 9);
 
     global::clock = new Clock(global::cities, "tokyo");
 
@@ -43,18 +50,22 @@ int main(int argc, char *argv[])
         if (global::clock->get_now_city()->name == city_names[i]) {
             init_city_i = i;
         }
+        city_names[i] = itr->second->country->name + " / " + city_names[i];
         i++;
     }
-    global::city_combo = new drawPattern::Combobox(city_names, 15,
+    global::city_combobox = new drawPattern::Combobox(city_names, 25,
         new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
-        // new Xy(Gl::centerPos()->x, Gl::centerPos()->y - 220), 
-        new Xy(0, 0), 
-        new Xy(5, 8), new Xy(1, 1)
+        new Xy(0, 0), new Xy(5, 10), new Xy(1.5, 1.5)
     );
 
-    global::city_combo->set_now(init_city_i);
+    global::city_combobox->set_now(init_city_i);
+
+    global::date_textbox = new drawPattern::Textbox("", 15, 
+        new Rgb(0, 0, 0), new Rgb(210, 210, 210), new Rgb(0, 0, 0),
+        new Xy(0, 0), new Xy(5, 8), new Xy(1, 1)
+    );
     
-    global::window = new Window(&argc, argv, "My Clock", new Xy(600, 480), display, 500);
+    global::window = new Window(&argc, argv, "My Clock", new Xy(600, 480), display, 250);
     global::window->init();
 
     cout << "position" << Gl::centerPos()->x << ", " << Gl::centerPos() -> y - 220 << "\n";
@@ -78,7 +89,21 @@ void display(void)
     // 時計の針
     global::draw->clock_needles();
 
-    global::city_combo->draw();
+
+    global::date_textbox->rePos(new Xy(
+        Gl::centerPos()->x - global::date_textbox->size()->x * 0.5
+        , Gl::centerPos()->y + 220 - global::city_combobox->size()->y));
+    auto clock_strs = global::clock->get_city_time_by_str_map();
+    global::date_textbox->setText(
+        clock_strs["year"] + "/" + clock_strs["mon"] + "/" + clock_strs["mday"] 
+        + "(" + clock_strs["wday"] + ")"
+    );
+    global::date_textbox->draw();
+
+    global::city_combobox->rePos(new Xy(
+        Gl::centerPos()->x - global::city_combobox->size()->x * 0.5, 
+        Gl::centerPos()->y - 220));
+    global::city_combobox->draw();
 
 
     glFlush();
