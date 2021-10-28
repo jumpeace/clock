@@ -9,6 +9,7 @@ using namespace std;
 #include "cli/clock.h"
 #include "gli/window.h"
 #include "gli/draw.h"
+#include "gli/draw_pattern.h"
 #include "global.h"
 
 void display();
@@ -47,6 +48,11 @@ void display(void)
     global::draw->background();
     // 時計の針
     global::draw->clock_needles();
+    drawPattern::_str("aiueo", new Xy(100, 100));
+    drawPattern::textbox("Tokyo", 6,
+        new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
+        new Xy(100, 130), new Xy(5, 10), new Xy(2, 2)
+    );
 
     glFlush();
 }
