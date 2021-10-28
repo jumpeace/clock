@@ -14,7 +14,6 @@ using namespace std;
 
 void display();
 
-
 int main(int argc, char *argv[])
 {
     // 国
@@ -61,13 +60,16 @@ void display(void)
     // 現在時刻を記録
     global::clock->record_now();
 
-    // --- 描画ゾーン ---
-    // 背景
-    global::draw->background();
-    // 時計の針
-    global::draw->clock_needles();
+    // // --- 描画ゾーン ---
+    // // 背景
+    // global::draw->background();
+    // // 時計の針
+    // global::draw->clock_needles();
 
-    global::city_combo->draw();
+    // global::city_combo->draw();
+
+    // global::images["1"]->putSprite(new Xy(100, 100));
+    // global::images["2"]->putSprite(new Xy(100, 100));
 
     glFlush();
 }

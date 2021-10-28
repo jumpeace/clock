@@ -12,7 +12,7 @@ void drawPattern::circle(Xy *center_pos, float round, Rgb *filling_color)
     float angle;
 
     glBegin(GL_POLYGON);
-    Gl::color(filling_color);
+    Gl::color3(filling_color);
 
     for (auto i = 0; i < edge_num; i++)
     {
@@ -32,7 +32,7 @@ void drawPattern::clock_needle(float len, float angle, float lineWidth, Rgb *col
     auto center_pos = Gl::centerPos();
 
     glBegin(GL_LINES);
-    Gl::color(color);
+    Gl::color3(color);
     glVertex2i(center_pos->x, center_pos->y);
     glVertex2i(
         center_pos->x + (int)(len * sin(angle)),
@@ -62,7 +62,7 @@ void drawPattern::textbox(
     float c_size = 9;
     
     glBegin(GL_QUADS);
-    Gl::color(border_color);
+    Gl::color3(border_color);
     glVertex2i(start_pos->x - border_size->x / 2,
                start_pos->y - border_size->y / 2);
     glVertex2i(start_pos->x + pad_size->x * 2 + border_size->x / 2 + (c_size * text_num_max),
@@ -74,7 +74,7 @@ void drawPattern::textbox(
     glEnd();
 
     glBegin(GL_QUADS);
-    Gl::color(bg_color);
+    Gl::color3(bg_color);
     glVertex2i(start_pos->x + border_size->x / 2,
                start_pos->y + border_size->y / 2);
     glVertex2i(start_pos->x + pad_size->x * 2 - border_size->x / 2 + (c_size * text_num_max),
@@ -85,7 +85,7 @@ void drawPattern::textbox(
                start_pos->y + c_size + pad_size->y * 2 - border_size->y / 2);
     glEnd();
 
-    Gl::color(text_color);
+    Gl::color3(text_color);
     drawPattern::_str(text, new Xy(start_pos->x + pad_size->x, start_pos->y + pad_size->y + c_size));
 }
 drawPattern::Combobox::Combobox(

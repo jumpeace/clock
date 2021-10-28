@@ -10,6 +10,7 @@ public:
     Draw(Clock*);
     void background();
     void clock_needles();
+    void hour_texts();
 };
 
 #endif

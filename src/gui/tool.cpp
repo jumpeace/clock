@@ -15,9 +15,13 @@ Xy* Gl::centerPos() {
     );
 }
 
-void Gl::color(Rgb* rgb)
+void Gl::color3(Rgb* rgb)
 {
     glColor3ub(rgb->r, rgb->g, rgb->b);
+}
+void Gl::color4(Rgba* rgba)
+{
+    glColor4ub(rgba->r, rgba->g, rgba->b, rgba->a);
 }
 void Gl::clear_color(Rgba* rgba)
 {

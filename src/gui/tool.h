@@ -9,7 +9,8 @@ class Gl {
 public:
     static Xy* windowSize();
     static Xy* centerPos();
-    static void color(Rgb*);
+    static void color3(Rgb*);
+    static void color4(Rgba*);
     static void clear_color(Rgba*);
 };
 

@@ -1,6 +1,7 @@
 #include "draw.h"
 
 #include <GL/glut.h>
+#include <GL/glpng.h>
 #include <cmath>
 
 #include "../base/math.h"
@@ -36,4 +37,9 @@ void Draw::clock_needles() {
     drawPattern::clock_needle(120,
                       math::n_ary_convertor(clock->city_time->sec, 60, M_PI * 2),
                       2.0, new Rgb(0, 0, 0));
+}
+
+
+void Draw::hour_texts() {
+
 }

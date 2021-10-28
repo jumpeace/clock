@@ -11,6 +11,7 @@ using namespace std;
 #include "cui/clock.h"
 #include "gui/draw.h"
 #include "gui/draw_pattern.h"
+#include "gui/image.h"
 
 namespace global {
     extern map<string, Country *> countries;
@@ -19,6 +20,7 @@ namespace global {
     extern Clock* clock;
     extern Draw* draw;
     extern drawPattern::Combobox* city_combo;
+    extern map<string, Image*> images;
 }
 
 #endif

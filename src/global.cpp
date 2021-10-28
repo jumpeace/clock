@@ -7,4 +7,5 @@ namespace global {
     Clock* clock;
     Draw* draw;
     drawPattern::Combobox* city_combo;
+    map<string, Image*> images;
 }
