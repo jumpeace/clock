@@ -8,8 +8,8 @@ TARGET = dist/result.exe
 #	ソースファイル(*.c)の一覧
 SRCS = \
 	src/base/dim.cpp src/base/color.cpp src/base/math.cpp \
-	src/cli/country.cpp src/cli/city.cpp src/cli/time.cpp src/cli/clock.cpp \
-	src/gli/tool.cpp src/gli/window.cpp src/gli/draw_pattern.cpp src/gli/draw.cpp \
+	src/cui/country.cpp src/cui/city.cpp src/cui/time.cpp src/cui/clock.cpp \
+	src/gui/tool.cpp src/gui/window.cpp src/gui/draw_pattern.cpp src/gui/draw.cpp \
 	src/global.cpp src/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
@@ -18,8 +18,8 @@ OBJS = $(SRCS:.cpp=.o)
 #	ヘッダファイルの一覧
 HEADERS = \
 	src/base/dim.h src/base/color.h src/base/math.h \
-	src/cli/country.h src/cli/city.h src/cli/time.h src/cli/clock.h \
-	src/gli/tool.h src/gli/window.h src/gli/draw_pattern.h src/gli/draw.h \
+	src/cui/country.h src/cui/city.h src/cui/time.h src/cui/clock.h \
+	src/gui/tool.h src/gui/window.h src/gui/draw_pattern.h src/gui/draw.h \
 	src/global.h
 
 #	コンパイラ・リンカの指定

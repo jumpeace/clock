@@ -6,11 +6,11 @@
 #include <iostream>
 using namespace std;
 
-#include "cli/country.h"
-#include "cli/city.h"
-#include "cli/clock.h"
-#include "gli/draw.h"
-#include "gli/draw_pattern.h"
+#include "cui/country.h"
+#include "cui/city.h"
+#include "cui/clock.h"
+#include "gui/draw.h"
+#include "gui/draw_pattern.h"
 
 namespace global {
     extern map<string, Country *> countries;

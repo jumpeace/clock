@@ -2,7 +2,7 @@
 #define _DRAW_H_
 
 #include "../base/dim.h"
-#include "../cli/clock.h"
+#include "../cui/clock.h"
 
 class Draw {
 public:

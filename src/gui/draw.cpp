@@ -5,8 +5,8 @@
 
 #include "../base/math.h"
 #include "../base/color.h"
-#include "../gli/tool.h"
-#include "../gli/draw_pattern.h"
+#include "../gui/tool.h"
+#include "../gui/draw_pattern.h"
 
 Draw::Draw(Clock* _clock) {
     clock = _clock;
