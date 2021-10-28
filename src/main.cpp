@@ -70,8 +70,6 @@ int main(int argc, char *argv[])
     global::window = new Window(&argc, argv, "My Clock", new Xy(600, 480), display, 250);
     global::window->init();
 
-    cout << "position" << Gl::centerPos()->x << ", " << Gl::centerPos() -> y - 220 << "\n";
-
     global::window->mainLoop();
 
     return 0;

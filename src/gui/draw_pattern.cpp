@@ -31,7 +31,6 @@ void drawPattern::line(Xy *p1, Xy *p2, float line_width, Rgb *color)
     glPointSize(line_width);
     auto diff = new Xy(p2->x - p1->x, p2->y - p1->y);
     float angle = atan(diff->y / diff->x);
-    // cout << "angle:" << angle << "\n";
     int div_num = sqrt(pow(diff->x, 2) + pow(diff->y, 2)) * denseness;
     auto step_w = new Xy(diff->x / div_num, diff->y / div_num);
     for (int i = 0; i < div_num; i++)
@@ -40,12 +39,6 @@ void drawPattern::line(Xy *p1, Xy *p2, float line_width, Rgb *color)
                                 p1->x + step_w->x * (i + 0.5),
                                 p1->y + step_w->y * (i + 0.5)),
                             line_width / 2.0, color);
-        // glBegin(GL_POINTS);
-        // glVertex2f(p1->x + step_w->x * (i + 0.5),
-        // p1->y + step_w->y * (i + 0.5));
-        // // glVertex2i(p1->x + step_w->x * (i + 0.5),
-        // // p1->y + step_w->y * (i + 0.5));
-        // glEnd();
     }
 }
 
@@ -62,12 +55,6 @@ void drawPattern::clock_needle(float len, float angle, float line_width, Rgb *co
                center_pos->y - (int)(len * cos(angle))),
         line_width,
         color);
-    // glBegin(GL_LINES);
-    // glVertex2i(center_pos->x, center_pos->y);
-    // glVertex2i(
-    //     center_pos->x + (int)(len * sin(angle)),
-    //     center_pos->y - (int)(len * cos(angle)));
-    // glEnd();
 }
 
 void drawPattern::_str(string str, Xy *init_pos)
@@ -101,9 +88,6 @@ drawPattern::Textbox::Textbox(
 
 void drawPattern::Textbox::draw()
 {
-    // rePos(new Xy(
-    //     Gl::centerPos()->x - size()->x * 0.5, Gl::centerPos()->y + 220));
-
     float c_size = 9;
 
     glBegin(GL_QUADS);
@@ -174,8 +158,6 @@ void drawPattern::Combobox::rePos(Xy *pos)
 
 void drawPattern::Combobox::draw()
 {
-    // rePos(new Xy(
-    //     Gl::centerPos()->x - size()->x * 0.5, Gl::centerPos()->y - 220));
     auto left_button = new drawPattern::Textbox(
         "<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
         new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y), pad_size, border_size);
@@ -186,11 +168,6 @@ void drawPattern::Combobox::draw()
     left_button->draw();
     center_text->draw();
     right_button->draw();
-    // drawPattern::textbox("<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
-    //                      new Xy(start_pos->x - c_size - pad_size->x * 2, start_pos->y), pad_size, border_size);
-    // drawPattern::textbox(texts[now_text], text_num_max, text_color, bg_color, border_color, start_pos, pad_size, border_size);
-    // drawPattern::textbox(">", 1, text_color, bg_color, border_color,
-    //                      new Xy(start_pos->x + c_size * text_num_max + pad_size->x * 2, start_pos->y), pad_size, border_size);
 }
 
 bool drawPattern::Combobox::set_now(int new_now)

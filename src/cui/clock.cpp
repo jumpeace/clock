@@ -52,8 +52,6 @@ void Clock::record_now()
 
     // 時間だけに時差を反映
     city_time->min += (int)((now_city->time_diff - (int)now_city->time_diff) * 60);
-    cout << "time_diff:" << now_city->time_diff << "\n";
-    cout << "min_diff:" << (int)((now_city->time_diff - (int)now_city->time_diff) * 60) << "\n";
     if (city_time->min < 0) {
         city_time->hour--;
         city_time->min += MIN_IN_HOUR;
