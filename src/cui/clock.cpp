@@ -42,6 +42,7 @@ void Clock::record_now()
     );
 
     // --- 時差を計算するゾーン ---
+    int MIN_IN_HOUR = 60; // 1時間の分
     int HOUR_IN_DAY = 24; // 1日の時間
     int DAY_IN_WEEK = 7;  // 1週間の日数
     int MON_IN_YEAR = 12; // 1ヶ月の日数
@@ -50,7 +51,19 @@ void Clock::record_now()
     city_time = utc_time;
 
     // 時間だけに時差を反映
-    city_time->hour += now_city->time_diff;
+    city_time->min += (int)((now_city->time_diff - (int)now_city->time_diff) * 60);
+    cout << "time_diff:" << now_city->time_diff << "\n";
+    cout << "min_diff:" << (int)((now_city->time_diff - (int)now_city->time_diff) * 60) << "\n";
+    if (city_time->min < 0) {
+        city_time->hour--;
+        city_time->min += MIN_IN_HOUR;
+    }
+    else if (city_time->min >= MIN_IN_HOUR) {
+        city_time->hour++;
+        city_time->min -= MIN_IN_HOUR;
+    }
+
+    city_time->hour += (int)now_city->time_diff;
 
     // 時間を変更したことによって、日にち,曜日,月,年が変わる場合は修正
     if (city_time->hour < 0)

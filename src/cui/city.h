@@ -9,9 +9,9 @@ class City {
 public:
     string name;
     Country* country;
-    int time_diff;
+    float time_diff;
 
-    City (string, Country*, int);
+    City (string, Country*, float);
 };
 
 #endif

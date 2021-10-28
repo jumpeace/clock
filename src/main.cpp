@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     global::countries["china"] = new Country("China");
     global::countries["egypt"] = new Country("Egypt");
     global::countries["france"] = new Country("France");
+    global::countries["india"] = new Country("India");
     global::countries["ingland"] = new Country("Ingland");
     global::countries["japan"] = new Country("Japan");
     global::countries["usa"] = new Country("USA");
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
     // 都市
     global::cities["beljing"] = new City("Beljing", global::countries["china"], 8);
     global::cities["cairo"] = new City("Cairo", global::countries["egypt"], 2);
+    global::cities["delhi"] = new City("Delhi", global::countries["india"], 5.5);
     global::cities["honolulu"] = new City("Honolulu", global::countries["usa"], -10);
     global::cities["london"] = new City("London", global::countries["ingland"], 0);
     global::cities["new-york"] = new City("New York", global::countries["usa"], -5);
