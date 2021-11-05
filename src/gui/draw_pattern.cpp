@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "tool.h"
+#include "my_gl.h"
 #include "../base/math.h"
 #include "draw_pattern.h"
 

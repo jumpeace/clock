@@ -2,7 +2,7 @@
 #include <GL/glpng.h>
 #include <iostream>
 #include "window.h"
-#include "tool.h"
+#include "my_gl.h"
 #include "../global.h"
 #include "draw_pattern.h"
 #include "image.h"

@@ -1,5 +1,5 @@
-#ifndef _TOOL_H_
-#define _TOOL_H_
+#ifndef _my_gl_H_
+#define _my_gl_H_
 
 #include <GL/glut.h>
 #include "../base/color.h"

@@ -1,4 +1,4 @@
-#include "tool.h"
+#include "my_gl.h"
 
 Xy* Gl::windowSize() {
     return new Xy(

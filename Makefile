@@ -9,7 +9,7 @@ TARGET = dist/result.exe
 SRCS = \
 	src/base/dim.cpp src/base/color.cpp src/base/math.cpp \
 	src/cui/country.cpp src/cui/city.cpp src/cui/time.cpp src/cui/clock.cpp \
-	src/gui/tool.cpp src/gui/window.cpp src/gui/draw_pattern.cpp src/gui/draw.cpp src/gui/image.cpp \
+	src/gui/my_gl.cpp src/gui/window.cpp src/gui/draw_pattern.cpp src/gui/draw.cpp src/gui/image.cpp \
 	src/global.cpp src/main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
@@ -19,7 +19,7 @@ OBJS = $(SRCS:.cpp=.o)
 HEADERS = \
 	src/base/dim.h src/base/color.h src/base/math.h \
 	src/cui/country.h src/cui/city.h src/cui/time.h src/cui/clock.h \
-	src/gui/tool.h src/gui/window.h src/gui/draw_pattern.h src/gui/draw.h src/gui/image.h \
+	src/gui/my_gl.h src/gui/window.h src/gui/draw_pattern.h src/gui/draw.h src/gui/image.h \
 	src/global.h
 
 #	コンパイラ・リンカの指定

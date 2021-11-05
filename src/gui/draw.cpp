@@ -6,7 +6,7 @@
 
 #include "../base/math.h"
 #include "../base/color.h"
-#include "../gui/tool.h"
+#include "../gui/my_gl.h"
 #include "../gui/draw_pattern.h"
 #include "../global.h"
 

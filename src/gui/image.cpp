@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "tool.h"
+#include "my_gl.h"
 #include "../base/color.h"
 
 void Image::init() {

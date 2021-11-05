@@ -8,7 +8,7 @@ using namespace std;
 #include "cui/country.h"
 #include "cui/city.h"
 #include "cui/clock.h"
-#include "gui/tool.h"
+#include "gui/my_gl.h"
 #include "gui/window.h"
 #include "gui/draw.h"
 #include "gui/draw_pattern.h"
