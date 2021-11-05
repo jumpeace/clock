@@ -1,0 +1,52 @@
+.
+├── Makefile
+├── Manifesto.txt
+├── icon
+│   ├── myicon.ico
+│   ├── myicon.o
+│   └── myicon.rc
+├── img
+│   ├── 1.png
+│   ├── 10.png
+│   ├── 11.png
+│   ├── 12.png
+│   ├── 2.png
+│   ├── 3.png
+│   ├── 4.png
+│   ├── 5.png
+│   ├── 6.png
+│   ├── 7.png
+│   ├── 8.png
+│   └── 9.png
+├── j18411s.exe
+└── src
+    ├── base
+    │   ├── color.cpp
+    │   ├── color.h
+    │   ├── dim.cpp
+    │   ├── dim.h
+    │   ├── math.cpp
+    │   └── math.h
+    ├── cui
+    │   ├── city.cpp
+    │   ├── city.h
+    │   ├── clock.cpp
+    │   ├── clock.h
+    │   ├── country.cpp
+    │   ├── country.h
+    │   ├── time.cpp
+    │   └── time.h
+    ├── global.cpp
+    ├── global.h
+    ├── gui
+    │   ├── draw.cpp
+    │   ├── draw.h
+    │   ├── draw_pattern.cpp
+    │   ├── draw_pattern.h
+    │   ├── image.cpp
+    │   ├── image.h
+    │   ├── my_gl.cpp
+    │   ├── my_gl.h
+    │   ├── window.cpp
+    │   └── window.h
+    └── main.cpp
