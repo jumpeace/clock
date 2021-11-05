@@ -3,7 +3,7 @@
 #
 
 #	最終目的のファイル
-TARGET = dist/result.exe
+TARGET = j18411s.exe
 
 #	ソースファイル(*.c)の一覧
 SRCS = \
@@ -27,7 +27,7 @@ CC = g++
 CCFLAGS = -Wall -I/usr/include/opengl
 LD = g++
 LDFLAGS =
-LIBS = -lglpng -lglut -lGLU -lGL
+LIBS = -lglpng -lglut -lGLU -lGL icon/myicon.o
 
 #	OBJSからTARGETを作る方法
 $(TARGET) : $(OBJS)
