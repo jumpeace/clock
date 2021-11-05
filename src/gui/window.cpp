@@ -48,7 +48,7 @@ Window::Window(int *argc, char *argv[], string title, Xy *size, void (*_display)
     glutInit(argc, argv);
 
     // ウィンドウの初期化
-    glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA | GLUT_DOUBLE);
     glutInitWindowSize(size->x, size->y);
 
     // TODO image初期化

@@ -107,4 +107,6 @@ void display(void)
 
 
     glFlush();
+    // ダブルバッファリング
+    glutSwapBuffers();
 }
