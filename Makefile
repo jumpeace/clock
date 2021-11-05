@@ -33,10 +33,6 @@ LIBS = -lglpng -lglut -lGLU -lGL
 $(TARGET) : $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(TARGET) $(LIBS)
 
-#	*.c から *.o を作る方法
-.c.o :
-	$(CC) $(CCFLAGS) -c $<
-
 #	*.o は HEADERS と Makefile に依存(これらが書き換わったときにも*.oを再構築)
 $(OBJS) : $(HEADERS) Makefile
 
