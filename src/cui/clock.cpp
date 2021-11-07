@@ -83,7 +83,7 @@ void Clock::record_now()
                 city_time->mon += MON_IN_YEAR;
             }
 
-            city_time->mday += city_time->get_day_in_mon();
+            city_time->mday += city_time->getDayInMon();
         }
 
         city_time->hour += HOUR_IN_DAY;
@@ -97,7 +97,7 @@ void Clock::record_now()
         }
 
         city_time->mday++;
-        if (city_time->mday > city_time->get_day_in_mon())
+        if (city_time->mday > city_time->getDayInMon())
         {
 
             city_time->mon++;
@@ -107,7 +107,7 @@ void Clock::record_now()
 
                 city_time->mon -= MON_IN_YEAR;
             }
-            city_time->mday -= city_time->get_day_in_mon();
+            city_time->mday -= city_time->getDayInMon();
         }
 
         city_time->hour -= HOUR_IN_DAY;
@@ -115,5 +115,5 @@ void Clock::record_now()
 }
 
 map<string, string> Clock::get_city_time_by_str_map() {
-    return city_time->get_by_str_map();
+    return city_time->getByStrList();
 }

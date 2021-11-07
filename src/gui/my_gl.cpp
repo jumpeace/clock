@@ -25,6 +25,6 @@ void Gl::color4(Rgba* rgba)
 }
 void Gl::clear_color(Rgba* rgba)
 {
-    auto gl_color = rgba->to_gl();
+    auto gl_color = rgba->toGl();
     glClearColor(gl_color["r"], gl_color["g"], gl_color["b"], gl_color["a"]);
 }

@@ -11,7 +11,7 @@ public:
     int g;
     int b;
     Rgb(int, int, int);
-    map<string, float> to_gl();
+    map<string, float> toGl();
 };
 
 class Rgba: public Rgb
@@ -19,7 +19,7 @@ class Rgba: public Rgb
 public:
     int a;
     Rgba(int, int, int, int);
-    map<string, float> to_gl();
+    map<string, float> toGl();
 };
 
 #endif

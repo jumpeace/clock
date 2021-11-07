@@ -18,7 +18,7 @@ void Draw::background()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    Gl::clear_color((clock->city_time->is_morning()) ? 
+    Gl::clear_color((clock->city_time->isMorning()) ? 
         new Rgba(100, 237, 237, 255) :new Rgba(237, 172, 102, 255));
 
     int inner_round = 180;

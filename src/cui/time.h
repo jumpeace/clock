@@ -7,6 +7,7 @@
 #include <iomanip>
 using namespace std;
 
+// TODO functions.cpp (←math.cpp) にまとめる
 string fill_by_zero(int, int);
 
 class Time
@@ -22,14 +23,15 @@ public:
 
     Time(int, int, int, int, int, int, int);
     // 曜日を文字列(英語)で取得する
-    string get_wday_by_str();
-    // 閏年かどうか判定する
-    bool is_leap();
+    string getWdayByStr();
+    // 閏年かどうかを判定する
+    bool isLeap();
     // 任意の月の日数を取得する
-    int get_day_in_mon();
-    // 午前かどうか判定する
-    bool is_morning();
-    map<string, string> get_by_str_map();
+    int getDayInMon();
+    // 午前かどうかを判定する
+    bool isMorning();
+    // 文字列で日時の情報を取得する
+    map<string, string> getByStrList();
 };
 
 #endif
