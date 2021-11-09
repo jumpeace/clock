@@ -247,16 +247,12 @@ int drawPattern::Combobox::getTextsNum()
 void drawPattern::Combobox::leftButtonProc(int button, int button_state, Xy *mouse, void(*callback) (void))
 {
     if (button != GLUT_LEFT_BUTTON || button_state != GLUT_DOWN) return;
-    cout << "hello\n";
 
     // 左のボタンの位置
     auto button_pos = new Xy(pos->x - c_size - pad_size->x * 2, pos->y);
-    cout << "mouse: " << mouse->x << ", " << mouse->y << "\n";
-    cout << "button: " << button_pos->x << ", " << button_pos->y << "\n";
     if (!mouse->isIn(button_pos, new Xy(
         button_pos->x + c_size + pad_size->x * 2, button_pos->y + c_size + pad_size->y * 2)))
         return;
-    cout << "world\n";
 
     callback();
 }
