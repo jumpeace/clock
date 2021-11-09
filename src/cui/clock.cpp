@@ -21,7 +21,7 @@ bool Clock::setCity(string city_key)
 }
 
 // 現在の都市を取得する
-City* Clock::getNowCity() {
+City* Clock::getNowIdxCity() {
     return now_city;
 }
 

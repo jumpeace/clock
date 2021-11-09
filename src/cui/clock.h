@@ -23,7 +23,7 @@ public:
     // 時刻を取得する都市を変更する。
     bool setCity(string);
     // 現在の都市を取得する
-    City* getNowCity();
+    City* getNowIdxCity();
     // 現在時刻を記録する
     void recordNow();
     // 文字列で都市の時刻を取得する

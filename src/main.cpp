@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     for (auto itr = global::city_list.begin(); itr != global::city_list.end(); ++itr) {
         global::city_keys[i] = itr->first;
         city_names[i] = itr->second->name;
-        if (global::clock->getNowCity()->name == city_names[i]) {
+        if (global::clock->getNowIdxCity()->name == city_names[i]) {
             init_city_i = i;
         }
         city_names[i] = itr->second->country->name + " / " + city_names[i];
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
         new Xy(0, 0), new Xy(5, 10), new Xy(1.5, 1.5)
     );
 
-    global::city_combobox->set_now(init_city_i);
+    global::city_combobox->setNowIdx(init_city_i);
 
     global::date_textbox = new drawPattern::Textbox("", 15, 
         new Rgb(0, 0, 0), new Rgb(210, 210, 210), new Rgb(0, 0, 0),
@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
     );
     
     global::window = new Window(&argc, argv, "My Clock", new Xy(600, 480), display, 250);
+    global::window->load();
     global::window->init();
 
     global::window->mainLoop();

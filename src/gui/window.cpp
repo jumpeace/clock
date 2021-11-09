@@ -15,19 +15,20 @@ void timer(int value)
     glutTimerFunc(wait_ms, timer, 0);
 }
 
+void leftButtonCallback() {
+    global::city_combobox->setNowIdx(
+        (global::city_combobox->getNowIdx() + global::city_combobox->getTextsNum() - 1) % global::city_combobox->getTextsNum());
+}
+void rightButtonCallback() {
+    global::city_combobox->setNowIdx(
+        (global::city_combobox->getNowIdx() + 1) % global::city_combobox->getTextsNum());
+}
+
 void mouseFunc(int button, int state, int x, int y)
 {
-    if (button != GLUT_LEFT_BUTTON || state != GLUT_DOWN)
-        return;
-    if (global::city_combobox->isInLeftButton(new Xy(x, y))) {
-        global::city_combobox->set_now(
-            (global::city_combobox->get_now() + global::city_combobox->get_texts_num() - 1) % global::city_combobox->get_texts_num());
-    }
-    else if (global::city_combobox->isInRightButton(new Xy(x, y))) {
-        global::city_combobox->set_now(
-            (global::city_combobox->get_now() + 1) % global::city_combobox->get_texts_num());
-    }
-    global::clock->setCity(global::city_keys[global::city_combobox->get_now()]);
+    global::city_combobox->leftButtonProc(button, state, new Xy(x, y), leftButtonCallback);
+    global::city_combobox->rightButtonProc(button, state, new Xy(x, y), rightButtonCallback);
+    global::clock->setCity(global::city_keys[global::city_combobox->getNowIdx()]);
 }
 
 // 画面サイズが変わっても、座標が混乱しないようにする
@@ -51,8 +52,6 @@ Window::Window(int *argc, char *argv[], string title, Xy *size, void (*_display)
     glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA | GLUT_DOUBLE);
     glutInitWindowSize(size->x, size->y);
 
-    // TODO image初期化
-
     // ウィンドウ作成
     glutCreateWindow(title.c_str());
     glutDisplayFunc(display);
@@ -64,7 +63,9 @@ Window::Window(int *argc, char *argv[], string title, Xy *size, void (*_display)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+}
 
+void Window::load() {
     global::images["1"] = new Image("img/1.png");
     global::images["2"] = new Image("img/2.png");
     global::images["3"] = new Image("img/3.png");

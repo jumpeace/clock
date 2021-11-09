@@ -46,9 +46,8 @@ void drawPattern::circleLine(Xy *p1, Xy *p2, float width, Rgb *color)
     float dense = 2;
     // 線の両端の座標差（x, y座標別々で計算）
     auto edge_diff = new Xy(
-        p2->x - p1->x, 
-        p2->y - p1->y
-    );
+        p2->x - p1->x,
+        p2->y - p1->y);
 
     // 描画する円の個数
     int circle_num = sqrt(pow(edge_diff->x, 2) + pow(edge_diff->y, 2)) * dense;
@@ -72,7 +71,7 @@ void drawPattern::clockNeedle(float len, float angle, float width, Rgb *color)
     auto center_pos = Gl::centerPos();
 
     Gl::color3(color);
-    
+
     drawPattern::circleLine(
         new Xy(center_pos->x, center_pos->y),
         new Xy(center_pos->x + (int)(len * sin(angle)),
@@ -81,14 +80,16 @@ void drawPattern::clockNeedle(float len, float angle, float width, Rgb *color)
         color);
 }
 
-void drawPattern::_text(string str, Xy *init_pos)
+// テキストを描画
+void drawPattern::text(string text, Xy *pos)
 {
-    // 画面上にテキスト描画
-    glRasterPos2f(init_pos->x, init_pos->y);
-    int size = (int)str.size();
-    for (int i = 0; i < size; ++i)
+    // 描画位置に移動
+    glRasterPos2f(pos->x, pos->y);
+
+    // テキストの文字分だけ左から描画する
+    for (int i = 0; i < (int)text.size(); ++i)
     {
-        char ic = str[i];
+        char ic = text[i];
         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ic);
     }
 }
@@ -98,7 +99,7 @@ drawPattern::Textbox::Textbox(
     Rgb *_text_color, Rgb *_bg_color, Rgb *_border_color,
     Xy *_pos, Xy *_pad_size, Xy *_border_size)
 {
-
+    // 文字サイズ9pxはアナログ時計アプリ内では不変
     c_size = 9;
     text = _text;
     text_num_max = _text_num_max;
@@ -113,8 +114,7 @@ drawPattern::Textbox::Textbox(
 // テキストボックスを描画
 void drawPattern::Textbox::draw()
 {
-    float c_size = 9;
-
+    // 枠線を描画
     glBegin(GL_QUADS);
     Gl::color3(border_color);
     glVertex2i(pos->x - border_size->x / 2,
@@ -127,6 +127,7 @@ void drawPattern::Textbox::draw()
                pos->y + c_size + pad_size->y * 2 + border_size->y / 2);
     glEnd();
 
+    // 背景を描画
     glBegin(GL_QUADS);
     Gl::color3(bg_color);
     glVertex2i(pos->x + border_size->x / 2,
@@ -139,8 +140,9 @@ void drawPattern::Textbox::draw()
                pos->y + c_size + pad_size->y * 2 - border_size->y / 2);
     glEnd();
 
+    // テキストを描画
     Gl::color3(text_color);
-    drawPattern::_text(text, new Xy(pos->x + pad_size->x, pos->y + pad_size->y + c_size));
+    drawPattern::text(text, new Xy(pos->x + pad_size->x, pos->y + pad_size->y + c_size));
 }
 
 // 描画位置を移動
@@ -149,27 +151,29 @@ void drawPattern::Textbox::rePos(Xy *_pos)
     pos = _pos;
 }
 
-// テキストを設定
-void drawPattern::Textbox::setText(string _text)
-{
-    text = _text;
-}
-
 // テキストボックスのサイズを取得
 Xy *drawPattern::Textbox::size()
 {
     return new Xy(c_size * text_num_max, c_size + pad_size->y * 2);
 }
 
+// テキストを設定
+void drawPattern::Textbox::setText(string _text)
+{
+    text = _text;
+}
+
+
 drawPattern::Combobox::Combobox(
     vector<string> _texts, int _text_num_max,
     Rgb *_text_color, Rgb *_bg_color, Rgb *_border_color,
     Xy *_pos, Xy *_pad_size, Xy *_border_size)
 {
+    // 文字サイズ9pxはアナログ時計アプリ内では不変
     c_size = 9;
     texts = _texts;
     texts_num = texts.size();
-    now_text = 0;
+    now_idx = 0;
     text_num_max = _text_num_max;
     text_color = _text_color;
     bg_color = _bg_color;
@@ -179,67 +183,94 @@ drawPattern::Combobox::Combobox(
     border_size = _border_size;
 }
 
+// コンボボックスを描画
+void drawPattern::Combobox::draw()
+{
+    // 左のボタン
+    auto left_button = new drawPattern::Textbox(
+        "<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
+        new Xy(pos->x - c_size - pad_size->x * 2, pos->y), pad_size, border_size);
+    left_button->draw();
+
+    // 中央のテキストボックス
+    auto center_text = new drawPattern::Textbox(
+        texts[now_idx], text_num_max, text_color, bg_color, border_color, pos, pad_size, border_size);
+    center_text->draw();
+
+    // 右のボタン
+    auto right_button = new drawPattern::Textbox(">", 1, text_color, bg_color, border_color,
+                                                 new Xy(pos->x + c_size * text_num_max + pad_size->x * 2, pos->y), pad_size, border_size);
+    right_button->draw();
+}
+
+// 描画位置を移動
 void drawPattern::Combobox::rePos(Xy *_pos)
 {
     pos = _pos;
 }
 
-void drawPattern::Combobox::draw()
-{
-    auto left_button = new drawPattern::Textbox(
-        "<", 1, new Rgb(0, 0, 0), new Rgb(255, 255, 255), new Rgb(0, 0, 0),
-        new Xy(pos->x - c_size - pad_size->x * 2, pos->y), pad_size, border_size);
-    auto center_text = new drawPattern::Textbox(
-        texts[now_text], text_num_max, text_color, bg_color, border_color, pos, pad_size, border_size);
-    auto right_button = new drawPattern::Textbox(">", 1, text_color, bg_color, border_color,
-                                                 new Xy(pos->x + c_size * text_num_max + pad_size->x * 2, pos->y), pad_size, border_size);
-    left_button->draw();
-    center_text->draw();
-    right_button->draw();
-}
-
-bool drawPattern::Combobox::set_now(int new_now)
-{
-    if (new_now >= texts_num || new_now < 0)
-        return false;
-    now_text = new_now;
-    return true;
-}
-
-int drawPattern::Combobox::get_now()
-{
-    return now_text;
-}
-
-string drawPattern::Combobox::get_now_text()
-{
-    return texts[drawPattern::Combobox::get_now()];
-}
-
-int drawPattern::Combobox::get_texts_num()
-{
-    return texts_num;
-}
-
+// コンボボックスのサイズを取得
 Xy *drawPattern::Combobox::size()
 {
     return new Xy(c_size * (text_num_max + 2), c_size + pad_size->y * 2);
 }
 
-bool drawPattern::Combobox::isInLeftButton(Xy *mouse)
+// 描画対象のテキストの要素番号を変更
+bool drawPattern::Combobox::setNowIdx(int new_now)
 {
-    auto button_pos = new Xy(pos->x - c_size - pad_size->x * 2, pos->y);
-    return mouse->isIn(
-        button_pos,
-        new Xy(button_pos->x + c_size + pad_size->x * 2, pos->y + c_size + pad_size->y * 2));
-    return mouse->isIn(
-        button_pos,
-        new Xy(button_pos->x + pad_size->x * 2 + c_size, button_pos->y + c_size + pad_size->y));
+    if (new_now >= texts_num || new_now < 0)
+        return false;
+    now_idx = new_now;
+    return true;
 }
-bool drawPattern::Combobox::isInRightButton(Xy *mouse)
+
+// 描画対象のテキストの要素番号を取得
+int drawPattern::Combobox::getNowIdx()
 {
+    return now_idx;
+}
+
+// 描画対象のテキストを取得
+string drawPattern::Combobox::getNowIdxText()
+{
+    return texts[drawPattern::Combobox::getNowIdx()];
+}
+
+// インスタンス変数 texts_num の ゲッター
+int drawPattern::Combobox::getTextsNum()
+{
+    return texts_num;
+}
+
+
+// 左のボタンにマウスが入っているかを判定
+void drawPattern::Combobox::leftButtonProc(int button, int button_state, Xy *mouse, void(*callback) (void))
+{
+    if (button != GLUT_LEFT_BUTTON || button_state != GLUT_DOWN) return;
+    cout << "hello\n";
+
+    // 左のボタンの位置
+    auto button_pos = new Xy(pos->x - c_size - pad_size->x * 2, pos->y);
+    cout << "mouse: " << mouse->x << ", " << mouse->y << "\n";
+    cout << "button: " << button_pos->x << ", " << button_pos->y << "\n";
+    if (!mouse->isIn(button_pos, new Xy(
+        button_pos->x + c_size + pad_size->x * 2, button_pos->y + c_size + pad_size->y * 2)))
+        return;
+    cout << "world\n";
+
+    callback();
+}
+
+// 右のボタンにマウスが入っているかを判定
+void drawPattern::Combobox::rightButtonProc(int button, int button_state, Xy *mouse, void(*callback) (void))
+{
+    if (button != GLUT_LEFT_BUTTON || button_state != GLUT_DOWN) return;
+
+    // 左のボタンの位置
     auto button_pos = new Xy(pos->x + c_size * text_num_max + pad_size->x * 2, pos->y);
-    return mouse->isIn(
-        button_pos,
-        new Xy(button_pos->x + pad_size->x * 2 + c_size, button_pos->y + c_size + pad_size->y));
+    if (!mouse->isIn(button_pos, new Xy(
+        button_pos->x + c_size + pad_size->x * 2, button_pos->y + c_size + pad_size->y * 2)))
+        return;
+        
+    callback();
 }
