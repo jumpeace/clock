@@ -27,7 +27,7 @@ void mouseFunc(int button, int state, int x, int y)
         global::city_combobox->set_now(
             (global::city_combobox->get_now() + 1) % global::city_combobox->get_texts_num());
     }
-    global::clock->set_city(global::city_keys[global::city_combobox->get_now()]);
+    global::clock->setCity(global::city_keys[global::city_combobox->get_now()]);
 }
 
 // 画面サイズが変わっても、座標が混乱しないようにする

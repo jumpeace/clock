@@ -7,6 +7,7 @@ public:
     float x;
     float y;
     Xy(float, float);
+    // 引数によって一意に決まる正方形に入っているか
     bool isIn(Xy*, Xy*);
 };
 

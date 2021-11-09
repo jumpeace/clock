@@ -68,15 +68,15 @@ bool Time::isMorning() {
 // 文字列で日時の情報を取得する
 map<string, string> Time::getByStrList()
 {
-    map<string, string> str_map;
+    map<string, string> str_list;
 
-    str_map["year"] = fill_by_zero(year, 4);
-    str_map["mon"] = fill_by_zero(mon, 2);
-    str_map["mday"] = fill_by_zero(mday, 2);
-    str_map["wday"] = getWdayByStr();
-    str_map["hour"] = fill_by_zero(hour, 2);
-    str_map["min"] = fill_by_zero(min, 2);
-    str_map["sec"] = fill_by_zero(sec, 2);
+    str_list["year"] = fill_by_zero(year, 4);
+    str_list["mon"] = fill_by_zero(mon, 2);
+    str_list["mday"] = fill_by_zero(mday, 2);
+    str_list["wday"] = getWdayByStr();
+    str_list["hour"] = fill_by_zero(hour, 2);
+    str_list["min"] = fill_by_zero(min, 2);
+    str_list["sec"] = fill_by_zero(sec, 2);
 
-    return str_map;
+    return str_list;
 }

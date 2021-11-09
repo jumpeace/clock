@@ -1,29 +1,32 @@
 #include "clock.h"
 
-Clock::Clock(map<string, City*> _cities, string init_city_key)
+Clock::Clock(map<string, City*> _city_list, string init_city_key)
 {
-    cities = _cities;
-    if (!set_city(init_city_key)) {
+    city_list = _city_list;
+    if (!setCity(init_city_key)) {
         return;
     }
 }
 
-bool Clock::set_city(string city_key)
+// 時刻を取得する都市を変更する。
+bool Clock::setCity(string city_key)
 {
-    if (cities.count(city_key) == 0)
+    if (city_list.count(city_key) == 0)
     {
         return false;
     }
-    now_city = cities[city_key];
+    now_city = city_list[city_key];
 
     return true;
 }
 
-City* Clock::get_now_city() {
+// 現在の都市を取得する
+City* Clock::getNowCity() {
     return now_city;
 }
 
-void Clock::record_now()
+// 現在時刻を記録する
+void Clock::recordNow()
 { 
     // --- 世界標準時で取得するゾーン ---
     time_t tt;
@@ -42,15 +45,15 @@ void Clock::record_now()
     );
 
     // --- 時差を計算するゾーン ---
-    int MIN_IN_HOUR = 60; // 1時間の分
-    int HOUR_IN_DAY = 24; // 1日の時間
-    int DAY_IN_WEEK = 7;  // 1週間の日数
-    int MON_IN_YEAR = 12; // 1ヶ月の日数
+    int MIN_IN_HOUR = 60; // 1時間が何分か
+    int HOUR_IN_DAY = 24; // 1日が何時間か
+    int DAY_IN_WEEK = 7;  // 1週間が何日か
+    int MON_IN_YEAR = 12; // 1ヶ月が何日か
 
     // とりあえず世界標準時の時間をディープコピー
     city_time = utc_time;
 
-    // 時間だけに時差を反映
+    // min に時差を反映
     city_time->min += (int)((now_city->time_diff - (int)now_city->time_diff) * 60);
     if (city_time->min < 0) {
         city_time->hour--;
@@ -60,6 +63,8 @@ void Clock::record_now()
         city_time->hour++;
         city_time->min -= MIN_IN_HOUR;
     }
+
+    // hour に時差を反映
 
     city_time->hour += (int)now_city->time_diff;
 
@@ -114,6 +119,7 @@ void Clock::record_now()
     }
 }
 
-map<string, string> Clock::get_city_time_by_str_map() {
+// 文字列で都市の時刻を取得する
+map<string, string> Clock::getCityTimeByStrList() {
     return city_time->getByStrList();
 }

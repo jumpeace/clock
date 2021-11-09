@@ -9,7 +9,7 @@ public:
     Clock* clock;
     Draw(Clock*);
     void background();
-    void clock_needles();
+    void clockNeedles();
 };
 
 #endif

@@ -19,37 +19,37 @@ void display();
 int main(int argc, char *argv[])
 {
     // 国
-    global::countries["china"] = new Country("China");
-    global::countries["egypt"] = new Country("Egypt");
-    global::countries["france"] = new Country("France");
-    global::countries["india"] = new Country("India");
-    global::countries["ingland"] = new Country("Ingland");
-    global::countries["japan"] = new Country("Japan");
-    global::countries["usa"] = new Country("USA");
+    global::country_list["china"] = new Country("China");
+    global::country_list["egypt"] = new Country("Egypt");
+    global::country_list["france"] = new Country("France");
+    global::country_list["india"] = new Country("India");
+    global::country_list["ingland"] = new Country("Ingland");
+    global::country_list["japan"] = new Country("Japan");
+    global::country_list["usa"] = new Country("USA");
 
     // 都市
-    global::cities["beljing"] = new City("Beljing", global::countries["china"], 8);
-    global::cities["cairo"] = new City("Cairo", global::countries["egypt"], 2);
-    global::cities["delhi"] = new City("Delhi", global::countries["india"], 5.5);
-    global::cities["honolulu"] = new City("Honolulu", global::countries["usa"], -10);
-    global::cities["london"] = new City("London", global::countries["ingland"], 0);
-    global::cities["new-york"] = new City("New York", global::countries["usa"], -5);
-    global::cities["paris"] = new City("Paris", global::countries["france"], 1);
-    global::cities["san-francisco"] = new City("San Francisco", global::countries["usa"], -8);
-    global::cities["tokyo"] = new City("Tokyo", global::countries["japan"], 9);
+    global::city_list["beljing"] = new City("Beljing", global::country_list["china"], 8);
+    global::city_list["cairo"] = new City("Cairo", global::country_list["egypt"], 2);
+    global::city_list["delhi"] = new City("Delhi", global::country_list["india"], 5.5);
+    global::city_list["honolulu"] = new City("Honolulu", global::country_list["usa"], -10);
+    global::city_list["london"] = new City("London", global::country_list["ingland"], 0);
+    global::city_list["new-york"] = new City("New York", global::country_list["usa"], -5);
+    global::city_list["paris"] = new City("Paris", global::country_list["france"], 1);
+    global::city_list["san-francisco"] = new City("San Francisco", global::country_list["usa"], -8);
+    global::city_list["tokyo"] = new City("Tokyo", global::country_list["japan"], 9);
 
-    global::clock = new Clock(global::cities, "tokyo");
+    global::clock = new Clock(global::city_list, "tokyo");
 
     global::draw = new Draw(global::clock);
-    global::city_keys.resize(global::cities.size());
-    vector<string> city_names(global::cities.size());
+    global::city_keys.resize(global::city_list.size());
+    vector<string> city_names(global::city_list.size());
 
     int i = 0;
     int init_city_i;
-    for (auto itr = global::cities.begin(); itr != global::cities.end(); ++itr) {
+    for (auto itr = global::city_list.begin(); itr != global::city_list.end(); ++itr) {
         global::city_keys[i] = itr->first;
         city_names[i] = itr->second->name;
-        if (global::clock->get_now_city()->name == city_names[i]) {
+        if (global::clock->getNowCity()->name == city_names[i]) {
             init_city_i = i;
         }
         city_names[i] = itr->second->country->name + " / " + city_names[i];
@@ -81,30 +81,13 @@ void display(void)
 
     glClear(GL_COLOR_BUFFER_BIT);
     // 現在時刻を記録
-    global::clock->record_now();
+    global::clock->recordNow();
 
     // --- 描画ゾーン ---
     // 背景
     global::draw->background();
     // 時計の針
-    global::draw->clock_needles();
-
-
-    global::date_textbox->rePos(new Xy(
-        Gl::centerPos()->x - global::date_textbox->size()->x * 0.5
-        , Gl::centerPos()->y + 220 - global::city_combobox->size()->y));
-    auto clock_strs = global::clock->get_city_time_by_str_map();
-    global::date_textbox->setText(
-        clock_strs["year"] + "/" + clock_strs["mon"] + "/" + clock_strs["mday"] 
-        + "(" + clock_strs["wday"] + ")"
-    );
-    global::date_textbox->draw();
-
-    global::city_combobox->rePos(new Xy(
-        Gl::centerPos()->x - global::city_combobox->size()->x * 0.5, 
-        Gl::centerPos()->y - 220));
-    global::city_combobox->draw();
-
+    global::draw->clockNeedles();
 
     glFlush();
     // ダブルバッファリング

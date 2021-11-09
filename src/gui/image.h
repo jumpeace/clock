@@ -11,6 +11,7 @@ class Image {
 public:
     GLuint img;
     pngInfo info;
+    // OpenGLで画像の描画を可能にする
     static void init();
     Image(string);
     void putSprite(Xy*, float, float);

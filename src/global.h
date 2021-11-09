@@ -16,8 +16,8 @@ using namespace std;
 
 namespace global {
     extern Window* window;
-    extern map<string, Country *> countries;
-    extern map<string, City *> cities;
+    extern map<string, Country *> country_list;
+    extern map<string, City *> city_list;
     extern vector<string> city_keys;
     extern Clock* clock;
     extern Draw* draw;

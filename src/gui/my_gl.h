@@ -11,7 +11,7 @@ public:
     static Xy* centerPos();
     static void color3(Rgb*);
     static void color4(Rgba*);
-    static void clear_color(Rgba*);
+    static void clearColor(Rgba*);
 };
 
 #endif

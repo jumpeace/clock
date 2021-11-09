@@ -12,20 +12,22 @@ using namespace std;
 class Clock
 {
 protected:
-    map<string, City *> cities;
+    map<string, City *> city_list;
     City *now_city;
 
 public:
     Time *utc_time;
     Time *city_time;
+    
     Clock(map<string, City*>, string);
-
-    bool set_city(string);
-    City* get_now_city();
-
-    void record_now();
-
-    map<string, string> get_city_time_by_str_map();
+    // 時刻を取得する都市を変更する。
+    bool setCity(string);
+    // 現在の都市を取得する
+    City* getNowCity();
+    // 現在時刻を記録する
+    void recordNow();
+    // 文字列で都市の時刻を取得する
+    map<string, string> getCityTimeByStrList();
 };
 
 #endif

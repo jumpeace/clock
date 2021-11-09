@@ -23,7 +23,7 @@ void Gl::color4(Rgba* rgba)
 {
     glColor4ub(rgba->r, rgba->g, rgba->b, rgba->a);
 }
-void Gl::clear_color(Rgba* rgba)
+void Gl::clearColor(Rgba* rgba)
 {
     auto gl_color = rgba->toGl();
     glClearColor(gl_color["r"], gl_color["g"], gl_color["b"], gl_color["a"]);

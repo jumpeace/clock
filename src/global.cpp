@@ -2,8 +2,8 @@
 
 namespace global {
     Window* window;
-    map<string, Country *> countries;
-    map<string, City *> cities;
+    map<string, Country *> country_list;
+    map<string, City *> city_list;
     vector<string> city_keys;
     Clock* clock;
     Draw* draw;
