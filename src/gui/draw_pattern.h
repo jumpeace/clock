@@ -102,9 +102,9 @@ namespace drawPattern
         // インスタンス変数 texts_num の ゲッター
         int getTextsNum();
 
-        // 左のボタンにマウスが入っているかを判定
+        // 左のボタンの処理
         void leftButtonProc(int, int, Xy *, void(*)(void));
-        // 右のボタンにマウスが入っているかを判定
+        // 右のボタンの処理
         void rightButtonProc(int, int, Xy *, void(*)(void));
     };
 }

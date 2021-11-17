@@ -7,7 +7,7 @@ TARGET = j18411s.exe
 
 #	ソースファイル(*.c)の一覧
 SRCS = \
-	src/base/dim.cpp src/base/color.cpp src/base/math.cpp \
+	src/base/dim.cpp src/base/color.cpp src/base/funcs.cpp \
 	src/cui/country.cpp src/cui/city.cpp src/cui/time.cpp src/cui/clock.cpp \
 	src/gui/my_gl.cpp src/gui/window.cpp src/gui/draw_pattern.cpp src/gui/draw.cpp src/gui/image.cpp \
 	src/global.cpp src/main.cpp
@@ -17,7 +17,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 #	ヘッダファイルの一覧
 HEADERS = \
-	src/base/dim.h src/base/color.h src/base/math.h \
+	src/base/dim.h src/base/color.h src/base/funcs.h \
 	src/cui/country.h src/cui/city.h src/cui/time.h src/cui/clock.h \
 	src/gui/my_gl.h src/gui/window.h src/gui/draw_pattern.h src/gui/draw.h src/gui/image.h \
 	src/global.h

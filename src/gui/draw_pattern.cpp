@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "my_gl.h"
-#include "../base/math.h"
+#include "../base/funcs.h"
 #include "draw_pattern.h"
 
 // 円を描画
@@ -18,7 +18,7 @@ void drawPattern::circle(Xy *center_pos, float round, Rgb *filling_color)
 
     for (auto i = 0; i < edge_num; i++)
     {
-        angle = math::n_ary_convertor(i, edge_num, M_PI * 2);
+        angle = funcs::nAryConvertor(i, edge_num, M_PI * 2);
         glVertex2f(
             center_pos->x + (int)(round * sin(angle)),
             center_pos->y - (int)(round * cos(angle)));
@@ -243,30 +243,36 @@ int drawPattern::Combobox::getTextsNum()
 }
 
 
-// 左のボタンにマウスが入っているかを判定
+// 左のボタンの処理
 void drawPattern::Combobox::leftButtonProc(int button, int button_state, Xy *mouse, void(*callback) (void))
 {
+    // 左クリックされていない場合
     if (button != GLUT_LEFT_BUTTON || button_state != GLUT_DOWN) return;
 
     // 左のボタンの位置
     auto button_pos = new Xy(pos->x - c_size - pad_size->x * 2, pos->y);
+    // マウスがボタンの範囲内にない場合
     if (!mouse->isIn(button_pos, new Xy(
         button_pos->x + c_size + pad_size->x * 2, button_pos->y + c_size + pad_size->y * 2)))
         return;
 
+    // コールバック関数を呼ぶ
     callback();
 }
 
-// 右のボタンにマウスが入っているかを判定
+// 右のボタンの処理
 void drawPattern::Combobox::rightButtonProc(int button, int button_state, Xy *mouse, void(*callback) (void))
 {
+    // 左クリックされていない場合
     if (button != GLUT_LEFT_BUTTON || button_state != GLUT_DOWN) return;
 
-    // 左のボタンの位置
+    // 右のボタンの位置
     auto button_pos = new Xy(pos->x + c_size * text_num_max + pad_size->x * 2, pos->y);
+    // マウスがボタンの範囲内にない場合
     if (!mouse->isIn(button_pos, new Xy(
         button_pos->x + c_size + pad_size->x * 2, button_pos->y + c_size + pad_size->y * 2)))
         return;
         
+    // コールバック関数を呼ぶ
     callback();
 }

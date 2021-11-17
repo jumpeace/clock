@@ -15,19 +15,28 @@ void timer(int value)
     glutTimerFunc(wait_ms, timer, 0);
 }
 
+// 左のボタンが押されたときのコールバック関数
 void leftButtonCallback() {
+    // 前の都市に変更
     global::city_combobox->setNowIdx(
         (global::city_combobox->getNowIdx() + global::city_combobox->getTextsNum() - 1) % global::city_combobox->getTextsNum());
 }
+
+// 右のボタンが押されたときのコールバック関数
 void rightButtonCallback() {
+    // 次の都市に変更
     global::city_combobox->setNowIdx(
         (global::city_combobox->getNowIdx() + 1) % global::city_combobox->getTextsNum());
 }
 
-void mouseFunc(int button, int state, int x, int y)
+// マウスイベントがあったら呼ばれる関数
+void changeCity(int button, int state, int x, int y)
 {
+    // 左のボタンが押されたときの処理
     global::city_combobox->leftButtonProc(button, state, new Xy(x, y), leftButtonCallback);
+    // 右のボタンが押されたときの処理
     global::city_combobox->rightButtonProc(button, state, new Xy(x, y), rightButtonCallback);
+    // 時計に都市の変更を反映する
     global::clock->setCity(global::city_keys[global::city_combobox->getNowIdx()]);
 }
 
@@ -51,15 +60,16 @@ Window::Window(int *argc, char *argv[], string title, Xy *size, void (*_display)
     // ウィンドウの初期化
     glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA | GLUT_DOUBLE);
     glutInitWindowSize(size->x, size->y);
-
-    // ウィンドウ作成
     glutCreateWindow(title.c_str());
+
+    // glutMainLoop関数を実行する際に呼ばれる関数
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    glutMouseFunc(mouseFunc);
+    glutMouseFunc(changeCity);
     wait_ms = _wait_ms;
     glutTimerFunc(wait_ms, timer, 0);
 
+    // 画像を使うための設定
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);

@@ -1,11 +1,5 @@
 #include "time.h"
-
-string fill_by_zero(int src, int zero_num)
-{
-    std::ostringstream s_out;
-    s_out << setfill('0') << setw(zero_num) << src;
-    return s_out.str();
-}
+#include "../base/funcs.h"
 
 Time::Time(int _year, int _mon, int _mday, int _wday, int _hour, int _min, int _sec)
 {
@@ -70,13 +64,13 @@ map<string, string> Time::getByStrList()
 {
     map<string, string> str_list;
 
-    str_list["year"] = fill_by_zero(year, 4);
-    str_list["mon"] = fill_by_zero(mon, 2);
-    str_list["mday"] = fill_by_zero(mday, 2);
+    str_list["year"] = funcs::fillByZero(year, 4);
+    str_list["mon"] = funcs::fillByZero(mon, 2);
+    str_list["mday"] = funcs::fillByZero(mday, 2);
     str_list["wday"] = getWdayByStr();
-    str_list["hour"] = fill_by_zero(hour, 2);
-    str_list["min"] = fill_by_zero(min, 2);
-    str_list["sec"] = fill_by_zero(sec, 2);
+    str_list["hour"] = funcs::fillByZero(hour, 2);
+    str_list["min"] = funcs::fillByZero(min, 2);
+    str_list["sec"] = funcs::fillByZero(sec, 2);
 
     return str_list;
 }

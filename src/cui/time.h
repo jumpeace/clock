@@ -4,11 +4,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <iomanip>
 using namespace std;
-
-// TODO functions.cpp (←math.cpp) にまとめる
-string fill_by_zero(int, int);
 
 class Time
 {
