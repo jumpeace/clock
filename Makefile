@@ -3,7 +3,7 @@
 #
 
 #	最終目的のファイル
-TARGET = j18411s.exe
+TARGET = j18411.exe
 
 #	ソースファイル(*.c)の一覧
 SRCS = \
