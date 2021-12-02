@@ -1,8 +1,9 @@
 #ifndef _COLOR_H_
 #define _COLOR_H_
 
-#include <map>
+#include <iostream>
 using namespace std;
+#include <map>
 
 class Rgb
 {
