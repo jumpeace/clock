@@ -22,21 +22,16 @@ HEADERS = \
 	my_gl.h window.h draw_pattern.h draw.h \
 	global.h
 
-ICONRC = myicon.rc
-ICONOBJ = myicon.o
-
 #	コンパイラ・リンカの指定
-CC = i686-pc-cygwin-g++
+CC = g++
 CCFLAGS = -Wall -I/usr/include/opengl
-LD = i686-pc-cygwin-g++
 LD = g++
 LDFLAGS =
-LIBS = -lglpng -lglut32 -lglu32 -lopengl32 -lm
+LIBS = -lglpng -lglut -lGLU -lGL -lm
 
 #	OBJSからTARGETを作る方法
 $(TARGET) : $(OBJS)
-	i686-pc-cygwin-windres -i $(ICONRC) -o $(ICONOBJ)
-	$(LD) $(LDFLAGS) -o $(TARGET) $(OBJS) $(ICONOBJ) $(LIBS)
+	$(LD) $(LDFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
 
 .cpp.o :
 	$(CC) $(CCFLAGS) -c $<
