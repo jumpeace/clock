@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #ifndef _DIM_H_
 #define _DIM_H_
 

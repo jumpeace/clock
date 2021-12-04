@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #include "global.h"
 
 namespace global {

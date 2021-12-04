@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #ifndef _MY_MATH_H_
 #define _MY_MATH_H_
 

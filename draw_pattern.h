@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #ifndef _DRAW_PATTERN_H_
 #define _DRAW_PATTERN_H_
 

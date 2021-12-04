@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #ifndef _my_gl_H_
 #define _my_gl_H_
 

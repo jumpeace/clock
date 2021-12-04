@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #ifndef _COLOR_H_
 #define _COLOR_H_
 

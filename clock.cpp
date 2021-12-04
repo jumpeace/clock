@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #include "clock.h"
 #include "funcs.h"
 

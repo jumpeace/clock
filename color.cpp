@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #include "color.h"
 
 Rgb::Rgb(int _r, int _g, int _b) {

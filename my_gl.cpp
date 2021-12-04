@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #include "my_gl.h"
 
 Xy* Gl::windowSize() {

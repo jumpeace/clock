@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #include "city.h"
 
 City::City(string _name, Country *_country, float _time_diff)

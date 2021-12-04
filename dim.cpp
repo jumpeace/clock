@@ -1,3 +1,5 @@
+// 18411 川原隼平
+
 #include "dim.h"
 
 Xy::Xy(float _x, float _y)
