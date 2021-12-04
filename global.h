@@ -6,13 +6,12 @@
 #include <iostream>
 using namespace std;
 
-#include "cui/country.h"
-#include "cui/city.h"
-#include "cui/clock.h"
-#include "gui/draw.h"
-#include "gui/draw_pattern.h"
-#include "gui/image.h"
-#include "gui/window.h"
+#include "country.h"
+#include "city.h"
+#include "clock.h"
+#include "draw.h"
+#include "draw_pattern.h"
+#include "window.h"
 
 namespace global {
     extern Window* window;
@@ -23,7 +22,6 @@ namespace global {
     extern Draw* draw;
     extern drawPattern::Combobox* city_combobox;
     extern drawPattern::Textbox* date_textbox;
-    extern map<string, Image*> images;
 }
 
 #endif

@@ -3,9 +3,8 @@
 #include <iostream>
 #include "window.h"
 #include "my_gl.h"
-#include "../global.h"
+#include "global.h"
 #include "draw_pattern.h"
-#include "image.h"
 
 int wait_ms;
 
@@ -68,26 +67,6 @@ Window::Window(int *argc, char *argv[], string title, Xy *size, void (*_display)
     glutMouseFunc(changeCity);
     wait_ms = _wait_ms;
     glutTimerFunc(wait_ms, timer, 0);
-
-    // 画像を使うための設定
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-}
-
-void Window::load() {
-    global::images["1"] = new Image("img/1.png");
-    global::images["2"] = new Image("img/2.png");
-    global::images["3"] = new Image("img/3.png");
-    global::images["4"] = new Image("img/4.png");
-    global::images["5"] = new Image("img/5.png");
-    global::images["6"] = new Image("img/6.png");
-    global::images["7"] = new Image("img/7.png");
-    global::images["8"] = new Image("img/8.png");
-    global::images["9"] = new Image("img/9.png");
-    global::images["10"] = new Image("img/10.png");
-    global::images["11"] = new Image("img/11.png");
-    global::images["12"] = new Image("img/12.png");
 }
 
 void Window::init() {

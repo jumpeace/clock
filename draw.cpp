@@ -4,11 +4,11 @@
 #include <GL/glpng.h>
 #include <cmath>
 
-#include "../base/funcs.h"
-#include "../base/color.h"
-#include "../gui/my_gl.h"
-#include "../gui/draw_pattern.h"
-#include "../global.h"
+#include "funcs.h"
+#include "color.h"
+#include "my_gl.h"
+#include "draw_pattern.h"
+#include "global.h"
 
 // 画面の背景を描画
 Draw::Draw(Clock *_clock)
@@ -27,27 +27,16 @@ void Draw::background()
     int border_outer_round = 185;
     // 時計の中心と枠線内側との距離
     int border_inner_round = 180;
-    // 時計の中心と数字を描画する位置の距離
-    int text_round = 145;
     // 時計の中心と大きい目盛り線の内側の端との距離
-    int bigger_scale_round = border_inner_round - 15;
+    int bigger_scale_round = border_inner_round - 25;
     // 時計の中心と小さい目盛り線の内側の端との距離
-    int smaller_scale_round = border_inner_round - 7.5;
+    int smaller_scale_round = border_inner_round - 10;
 
     // 枠線の外枠の円を描画
     drawPattern::circle(Gl::centerPos(), border_outer_round, new Rgb(90, 90, 90));
     // 枠線の内枠の円を描画
     drawPattern::circle(Gl::centerPos(), border_inner_round, new Rgb(240, 240, 240));
 
-    // 1〜12の数字を描画
-    for (int i = 1; i <= 12; i++)
-    {
-        global::images[to_string(i)]->putSprite(
-            new Xy(
-                Gl::centerPos()->x + text_round * sin(funcs::nAryConvertor(i, 12, M_PI * 2)),
-                Gl::centerPos()->y - text_round * cos(funcs::nAryConvertor(i, 12, M_PI * 2))),
-            0.1, funcs::nAryConvertor(i, 12, M_PI * 2));
-    }
 
     // 目盛りを描画
     Gl::color3(new Rgb(0, 0, 0));
@@ -72,7 +61,7 @@ void Draw::background()
     // 日にちのテキストボックスを描画
     global::date_textbox->rePos(new Xy(
         Gl::centerPos()->x - global::date_textbox->size()->x * 0.5, Gl::centerPos()->y + 220 - global::city_combobox->size()->y));
-    auto clock_strs = global::clock->getCityTimeByStrList();
+    auto clock_strs = global::clock->getCityTime_ByStrList();
     global::date_textbox->setText(
         clock_strs["year"] + "/" + clock_strs["mon"] + "/" + clock_strs["mday"] + "(" + clock_strs["wday"] + ")");
     global::date_textbox->draw();

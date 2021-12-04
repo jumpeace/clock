@@ -1,8 +1,8 @@
 #ifndef _DRAW_H_
 #define _DRAW_H_
 
-#include "../base/dim.h"
-#include "../cui/clock.h"
+#include "dim.h"
+#include "clock.h"
 
 class Draw {
 public:

@@ -2,8 +2,8 @@
 #define _my_gl_H_
 
 #include <GL/glut.h>
-#include "../base/color.h"
-#include "../base/dim.h"
+#include "color.h"
+#include "dim.h"
 
 class Gl {
 public:

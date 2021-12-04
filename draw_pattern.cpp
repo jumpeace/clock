@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "my_gl.h"
-#include "../base/funcs.h"
+#include "funcs.h"
 #include "draw_pattern.h"
 
 // 円を描画
@@ -272,7 +272,7 @@ void drawPattern::Combobox::rightButtonProc(int button, int button_state, Xy *mo
     if (!mouse->isIn(button_pos, new Xy(
         button_pos->x + c_size + pad_size->x * 2, button_pos->y + c_size + pad_size->y * 2)))
         return;
-        
+
     // コールバック関数を呼ぶ
     callback();
 }

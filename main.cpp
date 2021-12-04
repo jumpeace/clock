@@ -4,14 +4,14 @@
 #include <cmath>
 using namespace std;
 
-#include "base/dim.h"
-#include "cui/country.h"
-#include "cui/city.h"
-#include "cui/clock.h"
-#include "gui/my_gl.h"
-#include "gui/window.h"
-#include "gui/draw.h"
-#include "gui/draw_pattern.h"
+#include "dim.h"
+#include "country.h"
+#include "city.h"
+#include "clock.h"
+#include "my_gl.h"
+#include "window.h"
+#include "draw.h"
+#include "draw_pattern.h"
 #include "global.h"
 
 void display();
@@ -74,14 +74,14 @@ int main(int argc, char *argv[])
     // 最初の都市
     global::city_combobox->setNowIdx(init_city_i);
 
-    global::date_textbox = new drawPattern::Textbox("", 15, 
+    global::date_textbox = new drawPattern::Textbox("", 15,
         new Rgb(0, 0, 0), new Rgb(210, 210, 210), new Rgb(0, 0, 0),
         new Xy(0, 0), new Xy(5, 8), new Xy(1, 1)
     );
-    
+
     // ウィンドウの制御
     global::window = new Window(&argc, argv, "My Clock", new Xy(600, 480), display, 250);
-    global::window->load();
+
     global::window->init();
 
     global::window->mainLoop();

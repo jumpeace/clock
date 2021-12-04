@@ -2,8 +2,8 @@
 #define _DRAW_PATTERN_H_
 
 #include <vector>
-#include "../base/dim.h"
-#include "../base/color.h"
+#include "dim.h"
+#include "color.h"
 
 namespace drawPattern
 {
@@ -91,7 +91,7 @@ namespace drawPattern
         void rePos(Xy *);
         // コンボボックスのサイズを取得
         Xy *size();
-        
+
         // 描画対象のテキストの要素番号を変更
         bool setNowIdx(int);
         // 描画対象のテキストの要素番号を取得

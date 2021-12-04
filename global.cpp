@@ -9,5 +9,4 @@ namespace global {
     Draw* draw;
     drawPattern::Combobox* city_combobox;
     drawPattern::Textbox* date_textbox;
-    map<string, Image*> images;
 }
