@@ -7,34 +7,38 @@ TARGET = j18411.exe
 
 #	ソースファイル(*.c)の一覧
 SRCS = \
-	src/base/dim.cpp src/base/color.cpp src/base/funcs.cpp \
-	src/cui/country.cpp src/cui/city.cpp src/cui/time.cpp src/cui/clock.cpp \
-	src/gui/my_gl.cpp src/gui/window.cpp src/gui/draw_pattern.cpp src/gui/draw.cpp src/gui/image.cpp \
-	src/global.cpp src/main.cpp
+	dim.cpp color.cpp funcs.cpp \
+	country.cpp city.cpp clock.cpp \
+	my_gl.cpp window.cpp draw_pattern.cpp draw.cpp \
+	global.cpp main.cpp
 
 #	オブジェクトファイル(*.o)の一覧
 OBJS = $(SRCS:.cpp=.o)
 
 #	ヘッダファイルの一覧
 HEADERS = \
-	src/base/dim.h src/base/color.h src/base/funcs.h \
-	src/cui/country.h src/cui/city.h src/cui/time.h src/cui/clock.h \
-	src/gui/my_gl.h src/gui/window.h src/gui/draw_pattern.h src/gui/draw.h src/gui/image.h \
-	src/global.h
+	dim.h color.h funcs.h \
+	country.h city.h clock.h \
+	my_gl.h window.h draw_pattern.h draw.h \
+	global.h
 
 #	コンパイラ・リンカの指定
 CC = g++
 CCFLAGS = -Wall -I/usr/include/opengl
 LD = g++
 LDFLAGS =
-LIBS = -lglpng -lglut -lGLU -lGL icon/myicon.o
+LIBS = -lglpng -lglut -lGLU -lGL -lm
 
 #	OBJSからTARGETを作る方法
 $(TARGET) : $(OBJS)
-	$(LD) $(OBJS) $(LDFLAGS) -o $(TARGET) $(LIBS)
+	$(LD) $(LDFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+
+.cpp.o :
+	$(CC) $(CCFLAGS) -c $<
 
 #	*.o は HEADERS と Makefile に依存(これらが書き換わったときにも*.oを再構築)
 $(OBJS) : $(HEADERS) Makefile
+
 
 #	make cleanとしたときに実行されるコマンド
 clean :
