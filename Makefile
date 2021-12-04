@@ -48,6 +48,3 @@ $(OBJS) : $(HEADERS) Makefile
 #	make cleanとしたときに実行されるコマンド
 clean :
 	rm -f $(OBJS)
-
-clean-all :
-	rm -f $(OBJS) $(TARGET)
