@@ -8,6 +8,7 @@
 #include "global.h"
 #include "draw_pattern.h"
 
+// timer関数が呼ばれる待ち時間
 int wait_ms;
 
 void timer(int value)
