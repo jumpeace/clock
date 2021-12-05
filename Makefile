@@ -29,7 +29,6 @@ ICONOBJ = myicon.o
 CC = i686-pc-cygwin-g++
 CCFLAGS = -Wall -I/usr/include/opengl
 LD = i686-pc-cygwin-g++
-LD = g++
 LDFLAGS =
 LIBS = -lglpng -lglut32 -lglu32 -lopengl32 -lm
 
@@ -47,4 +46,4 @@ $(OBJS) : $(HEADERS) Makefile
 
 #	make cleanとしたときに実行されるコマンド
 clean :
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(ICONOBJ)
